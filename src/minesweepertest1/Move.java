@@ -56,6 +56,12 @@ public int gety() {
         return new Move(playerName, gameId, x,y, action);
     }
 
+    
+    public static Move fromData(String playerName, String gameId, int x, int y, String action) {
+        MoveType moveType = MoveType.valueOf(action);
+        return new Move(playerName, gameId, x, y, moveType);
+    }
+    
     @Override
     public String toString() {
         return playerName + ";" + gameId + ";" + x+";" +y+ ";" + moveType.name();

@@ -50,6 +50,15 @@ public class PlayerProfile {
 
     return profile;
 }
+  
+  public static PlayerProfile FromData(String playerName, int wins, int losses,int points ) {
+        PlayerProfile profile = new PlayerProfile(playerName);
+        profile.wins = wins;
+        profile.losses = losses;
+        profile.points = points;
+
+        return profile;
+    }
    
     @Override
     public int hashCode() {

@@ -9,6 +9,25 @@ package minesweepertest1;
  *
  * @author grish
  */
+
+import java.util.Arrays;
+import java.util.List;
+
 public class DataBaseInitilization {
+    private DataBaseManager dbManager;
+    private List<DAO> daoList;
+
+    public DataBaseInitilization() {
+        this.dbManager = DataBaseManager.getInstance();
+        daoList = Arrays.asList(
+            new PlayerProfileDAO(dbManager),
+            new GameStateDAO(dbManager));
+}
     
+    
+    public void initializeDatabase() {
+        for (DAO dao : daoList) {
+            dao.ensureTableExists();
+        }
+    }
 }

@@ -56,6 +56,11 @@ public static GameState fromString(String data) {
     return gameState;
 }
 
+public static GameState fromData(String playerName, String gameId, String boardData) {
+    GameState gameState = new GameState(playerName, Board.fromString(boardData));
+    gameState.setGameId(gameId);
+    return gameState;
+}
     // Getters and Setters
     public String getPlayerName() {
         return playerName;

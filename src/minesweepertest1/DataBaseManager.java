@@ -62,8 +62,7 @@ public class DataBaseManager {
         }
     }
 
-    // Step 4: Prevent cloning
-    @Override
+     @Override
         public Object clone() throws
             CloneNotSupportedException {
             throw new CloneNotSupportedException();

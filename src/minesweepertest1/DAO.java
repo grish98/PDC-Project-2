@@ -10,5 +10,5 @@ package minesweepertest1;
  * @author grish
  */
 public interface DAO {
-    
+    void ensureTableExists();
 }

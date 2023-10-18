@@ -70,4 +70,9 @@ public static Leaderboard fromString(String serializedLeaderboard) {
     }
     return null;
 }
+
+public static Leaderboard fromData(String playerName, String difficulty, long time) {
+    return new Leaderboard(playerName, difficulty, time);
+}
+
 }

@@ -4,25 +4,19 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/PlayerProfileDAO.java</file>
-            <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/DAO.java</file>
             <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/DataBaseInitilization.java</file>
             <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/GameManager.java</file>
             <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/TestDB.java</file>
             <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/GameStateDAO.java</file>
-            <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/DifficultySettings.java</file>
             <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/Move.java</file>
-            <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/FileIO.java</file>
             <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/UserInterface.java</file>
-            <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/Leaderboard.java</file>
             <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/MoveDAO.java</file>
             <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/GameApp.java</file>
             <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/GameController.java</file>
             <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/Board.java</file>
             <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/LeaderBoardDAO.java</file>
-            <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/Cell.java</file>
             <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/GameState.java</file>
             <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/DataBaseManager.java</file>
-            <file>file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/src/minesweepertest1/PlayerProfile.java</file>
         </group>
     </open-files>
 </project-private>

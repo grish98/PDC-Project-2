@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeaderBoardDAO implements DAO{
-  private   DataBaseManager dbManager = DataBaseManager.getInstance();
+  private  static DataBaseManager dbManager = DataBaseManager.getInstance();
 
     public LeaderBoardDAO(DataBaseManager dbManager) {
         this.dbManager = dbManager;
@@ -96,7 +96,7 @@ public class LeaderBoardDAO implements DAO{
         }
     }
 
-    public List<Leaderboard> loadLeaderboard() {
+    public static List<Leaderboard> loadLeaderboard() {
         List<Leaderboard> leaderboard = new ArrayList<>();
         String query = "SELECT * FROM LEADERBOARD";
 

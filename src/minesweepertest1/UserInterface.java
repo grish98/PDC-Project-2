@@ -207,15 +207,15 @@ public class UserInterface {
         switch (input) {
             case "easy":
             case "e":
-                showLeaderboardForDifficulty(DifficultySettings.EASY);
+                GameManager.showLeaderboardForDifficulty(DifficultySettings.EASY);
                 break;
             case "medium":
             case "m":
-                showLeaderboardForDifficulty(DifficultySettings.MEDIUM);
+                GameManager.showLeaderboardForDifficulty(DifficultySettings.MEDIUM);
                 break;
             case "hard":
             case "h":
-                showLeaderboardForDifficulty(DifficultySettings.HARD);
+                GameManager.showLeaderboardForDifficulty(DifficultySettings.HARD);
                 break;
             case "q":
                 return;  //  exit the leaderboard 
@@ -224,23 +224,5 @@ public class UserInterface {
         }
     }
 }
-   private static void showLeaderboardForDifficulty(DifficultySettings difficulty) {
-    List<Leaderboard> entries = FileIO.loadLeaderboard();
-
-    // Filter by difficulty and sort by time
-    List<Leaderboard> filteredEntries = entries.stream()
-    .filter(entry -> entry.getDifficulty().equalsIgnoreCase(difficulty.toString()))
-    .sorted(Comparator.comparingLong(Leaderboard::getTime))
-    .collect(Collectors.toList());
-
-    System.out.println("Leaderboard for " + difficulty + ":");
-    if (filteredEntries.isEmpty()) {
-        System.out.println("No records available for this difficulty.");
-    } else {
-        for (int i = 0; i < filteredEntries.size(); i++) {
-            Leaderboard entry = filteredEntries.get(i);
-            System.out.println((i + 1) + ". " + entry.getPlayerName() + ": " + entry.getTime() + " seconds");
-        }
-    }
-}
+   
 }

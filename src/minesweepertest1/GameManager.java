@@ -9,6 +9,7 @@
 package minesweepertest1;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
@@ -258,4 +259,24 @@ public  void setupGame() {
     Leaderboard entry = new Leaderboard(profile.getPlayerName(), chosenDifficulty.toString(), timer.getDuration());
     return entry;
     }
+    
+    public  static void showLeaderboardForDifficulty(DifficultySettings difficulty) {
+    List<Leaderboard> entries = LeaderBoardDAO.loadLeaderboard();
+
+    // Filter by difficulty and sort by time
+    List<Leaderboard> filteredEntries = entries.stream()
+    .filter(entry -> entry.getDifficulty().equalsIgnoreCase(difficulty.toString()))
+    .sorted(Comparator.comparingLong(Leaderboard::getTime))
+    .collect(Collectors.toList());
+
+    System.out.println("Leaderboard for " + difficulty + ":");
+    if (filteredEntries.isEmpty()) {
+        System.out.println("No records available for this difficulty.");
+    } else {
+        for (int i = 0; i < filteredEntries.size(); i++) {
+            Leaderboard entry = filteredEntries.get(i);
+            System.out.println((i + 1) + ". " + entry.getPlayerName() + ": " + entry.getTime() + " seconds");
+        }
+    }
+}
 }

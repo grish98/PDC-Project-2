@@ -19,7 +19,7 @@ import java.sql.SQLException;
 public class DataBaseManager {
     private static final String USER_NAME = "grisham";
     private static final String PASSWORD = "grisham";
-    private static final String URL = "jdbc:derby://localhost:1527/MineSweeperEDB; create=true";
+    private static final String URL = "jdbc:derby:MineSweeperEDB;create=true";
     
     private Connection conn;
 
@@ -32,7 +32,7 @@ public class DataBaseManager {
     }
 
     
-    public synchronized static DataBaseManager getInstance() {
+    public static synchronized DataBaseManager getInstance() {
         if (instance == null) {
             instance = new DataBaseManager();
         }
@@ -40,15 +40,26 @@ public class DataBaseManager {
     }
 
     public Connection getConnection() {
-        return this.conn;
+    try {
+        // create a new connection
+        System.out.println("Establishing a new database connection");
+        conn = DriverManager.getConnection(URL);
+        } catch (SQLException e) {
+        System.err.println("Connection error: " + e.getMessage());
+        e.printStackTrace();
     }
+    return conn;
+}
 
     private void establishConnection() {
+        if (this.conn == null) {
         try {
             conn = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
             System.out.println(URL + " connected");
         } catch (SQLException ex) {
             System.err.println("SQLException: " + ex.getMessage());
+            ex.printStackTrace();  // Print full stack trace
+        }
         }
     }
 
@@ -58,10 +69,11 @@ public class DataBaseManager {
                 conn.close();
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
+                ex.printStackTrace();  // Print full stack trace
             }
         }
     }
-
+   
      @Override
         public Object clone() throws
             CloneNotSupportedException {

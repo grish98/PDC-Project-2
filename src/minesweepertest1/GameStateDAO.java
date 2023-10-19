@@ -22,7 +22,7 @@ import java.util.List;
  */
 public final class GameStateDAO implements DAO {
 
-    private DataBaseManager dbManager;
+    private  DataBaseManager dbManager = DataBaseManager.getInstance();
 
     public GameStateDAO(DataBaseManager dbManager) {
         this.dbManager = dbManager;
@@ -38,19 +38,21 @@ public final class GameStateDAO implements DAO {
             ResultSet tables = conn.getMetaData().getTables(null, null, "GAMESTATE", null);
             if (!tables.next()) {
                 stmt.execute("CREATE TABLE GAMESTATE ("
-                        + "PLAYERNAME VARCHAR(255) PRIMARY KEY,"
-                        + "GAMEID VARCHAR(255)"
-                        +"BOARD_STATE VARCHAR(4000)"
-                        + ")");
+                             + "PLAYERNAME VARCHAR(255),"
+                            + "GAMEID VARCHAR(4000),"
+                            + "BOARDSTATE VARCHAR(4000),"
+                            + "PRIMARY KEY (PLAYERNAME, GAMEID)"
+                            + ")");
             }
-        } catch (Exception e) {
-            System.err.println("Error ensuring table exists: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Error ensuring table exists:GAMESTATE " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
    
    public void saveGameState(GameState gameState) {
-        String insertSQL = "INSERT INTO GAMESTATE (GAME_ID, PLAYER_NAME, BOARD_STATE) VALUES (?, ?, ?)";
+        String insertSQL = "INSERT INTO GAMESTATE (GAMEID, PLAYERNAME, BOARDSTATE) VALUES (?, ?, ?)";
 
         try (Connection conn = dbManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
@@ -67,7 +69,7 @@ public final class GameStateDAO implements DAO {
 
     public Map<String, GameState> loadGameState(String playerName) {
         Map<String, GameState> gameStatesMap = new HashMap<>();
-        String query = "SELECT * FROM GAMESTATE WHERE PLAYER_NAME = ?";
+        String query = "SELECT * FROM GAMESTATE WHERE PLAYERNAME = ?";
 
         try (Connection conn = dbManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -78,9 +80,9 @@ public final class GameStateDAO implements DAO {
             while (rs.next()) {
                 
                 
-                String name = rs.getString("PLAYER_NAME");
-                String ID = rs.getString("GAME_ID");
-                String board = rs.getString("BOARD_STATE");
+                String name = rs.getString("PLAYERNAME");
+                String ID = rs.getString("GAMEID");
+                String board = rs.getString("BOARDSTATE");
                 
                 
               GameState gameState = GameState.fromData(name, ID, board);

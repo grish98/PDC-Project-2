@@ -21,7 +21,10 @@ public class DataBaseInitilization {
         this.dbManager = DataBaseManager.getInstance();
         daoList = Arrays.asList(
             new PlayerProfileDAO(dbManager),
-            new GameStateDAO(dbManager));
+            new GameStateDAO(dbManager),
+            new LeaderBoardDAO(dbManager),
+            new MoveDAO(dbManager));
+            
 }
     
     

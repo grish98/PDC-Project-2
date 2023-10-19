@@ -20,7 +20,7 @@ import java.util.List;
 
 public final class PlayerProfileDAO implements DAO{
     
-    private DataBaseManager dbManager;
+   private  DataBaseManager dbManager = DataBaseManager.getInstance();
 
     PlayerProfileDAO(DataBaseManager dbManager) {
         this.dbManager = dbManager;
@@ -39,11 +39,15 @@ public final class PlayerProfileDAO implements DAO{
                         + "PLAYERNAME VARCHAR(255) PRIMARY KEY,"
                         + "WINS INT,"
                         + "LOSSES INT,"
-                        + "POINTS INT,"
+                        + "POINTS INT"
                         + ")");
+
+
+
             }
-        } catch (Exception e) {
-            System.err.println("Error ensuring table exists: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Error ensuring table exists:(profile) " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -143,7 +147,7 @@ public final class PlayerProfileDAO implements DAO{
     }
 
     private void update(PlayerProfile profile) {
-        String query = "UPDATE PLAYERPROFILE SET WINS = ? SET LOSSES = ? SET POINTS = ? WHERE PLAYERNAME = ?";
+        String query = "UPDATE PLAYERPROFILE SET WINS = ?, LOSSES = ?, POINTS = ? WHERE PLAYERNAME = ?";
 
         try (Connection conn = dbManager.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {

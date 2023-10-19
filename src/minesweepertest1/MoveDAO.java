@@ -19,7 +19,7 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 public final class MoveDAO implements DAO{
-    private DataBaseManager dbManager;
+     private   DataBaseManager dbManager = DataBaseManager.getInstance();
 
     public MoveDAO(DataBaseManager dbManager) {
         this.dbManager = dbManager;
@@ -34,7 +34,6 @@ public final class MoveDAO implements DAO{
             ResultSet tables = conn.getMetaData().getTables(null, null, "MOVELOG", null);
             if (!tables.next()) {
                 stmt.execute("CREATE TABLE MOVELOG ("
-                                + "MOVE_ID VARCHAR(255) PRIMARY KEY,"
                                 + "PLAYERNAME VARCHAR(255),"
                                 + "GAMEID VARCHAR(255),"
                                 + "X INT,"
@@ -42,23 +41,24 @@ public final class MoveDAO implements DAO{
                                 + "ACTION VARCHAR(255)"
                                 + ")");
             }
-        } catch (Exception e) {
-            System.err.println("Error ensuring table exists: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Error ensuring table exists:(move) " + e.getMessage());
+            e.printStackTrace();
         }
     }
     
     public void saveMoveLog(List<Move> moves) {
-    String insertSQL = "INSERT INTO MOVELOG (MOVE_ID, PLAYERNAME, GAMEID, X, Y, ACTION) VALUES (?, ?, ?, ?, ?, ?)";
+    String insertSQL = "INSERT INTO MOVELOG ( PLAYERNAME, GAMEID, X, Y, ACTION) VALUES ( ?, ?, ?, ?, ?)";
 
     try (Connection conn = dbManager.getConnection();
          PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
         for (Move move : moves) {
-            pstmt.setString(1, move.getGameId());
-            pstmt.setString(2, move.getPlayerName());
-            pstmt.setString(3, move.getGameId());
-            pstmt.setInt(4, move.getx());
-            pstmt.setInt(5, move.gety());
-            pstmt.setString(6, move.getMoveType().toString());
+           
+            pstmt.setString(1, move.getPlayerName());
+            pstmt.setString(2, move.getGameId());
+            pstmt.setInt(3, move.getx());
+            pstmt.setInt(4, move.gety());
+            pstmt.setString(5, move.getMoveType().toString());
             pstmt.executeUpdate();
         }
     } catch (SQLException e) {

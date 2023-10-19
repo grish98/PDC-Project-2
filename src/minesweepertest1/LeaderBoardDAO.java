@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeaderBoardDAO implements DAO{
- private DataBaseManager dbManager;
+  private   DataBaseManager dbManager = DataBaseManager.getInstance();
 
     public LeaderBoardDAO(DataBaseManager dbManager) {
         this.dbManager = dbManager;
@@ -41,12 +41,13 @@ public class LeaderBoardDAO implements DAO{
                 stmt.execute("CREATE TABLE LEADERBOARD ("
                         + "PLAYERNAME VARCHAR(255),"
                         + "DIFFICULTY VARCHAR(255),"
-                        + "TIME LONG,"
+                        + "TIME BIGINT,"
                         + "PRIMARY KEY (PLAYERNAME, DIFFICULTY)"
                         + ")");
             }
-        } catch (Exception e) {
-            System.err.println("Error ensuring table exists: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Error ensuring table exists:)leaderboard " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

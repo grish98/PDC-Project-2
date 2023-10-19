@@ -29,6 +29,11 @@ public class GameManager {
     private static final Scanner scanner = new Scanner(System.in);
     private static List<Move> moveLog = new ArrayList<>();
     
+    private static final DataBaseManager dbManager = DataBaseManager.getInstance();
+    private static final PlayerProfileDAO playerProfileDAO = new PlayerProfileDAO(dbManager);
+    private final GameStateDAO gameStateDAO = new GameStateDAO(dbManager);
+    private final MoveDAO moveDAO = new MoveDAO(dbManager);
+    private final LeaderBoardDAO leaderboardDAO = new LeaderBoardDAO(dbManager);
     
 public  void setupGame() {
   
@@ -77,7 +82,7 @@ public  void setupGame() {
   
   // loads and display all saved games from a player, if none then player can choose to srtat a new game
    public void loadPlayersGame() {
-    Map<String, GameState> savedGamesMap = FileIO.loadGameState(profile.getPlayerName());
+     Map<String, GameState> savedGamesMap = gameStateDAO.loadGameState(profile.getPlayerName());
     List<GameState> savedGames = new ArrayList<>(savedGamesMap.values());
     
     if (savedGames.isEmpty()) {
@@ -128,7 +133,7 @@ public  void setupGame() {
    //loads all saved moves from certain game and executed them to continue from saved state
     private  void loadAndExecuteMoveLog(String gameId) {
     List<Move> movesForGame;
-        movesForGame = FileIO.loadMoveLog().stream()
+        movesForGame = moveDAO.loadMoveLog().stream()
                 .filter(move -> move.getGameId().equals(gameId))
                 .collect(Collectors.toList());
 
@@ -168,7 +173,7 @@ public  void setupGame() {
         //stops the timer and saves thetime taken to comeplete teh game
       timer.stop();
        //System.out.println(timer.getDuration());
-       FileIO.saveToLeaderboard(SaveToLeaderboard());
+      leaderboardDAO.saveToLeaderboard(SaveToLeaderboard());
        
       
     } if(getGameOver()){
@@ -178,7 +183,7 @@ public  void setupGame() {
         timer.stop();
        // System.out.println(timer.getDuration());
     }
-    FileIO.savePlayerProfile(profile);
+    playerProfileDAO.savePlayerProfile(profile);
     System.out.println("Thank you for playing!");
     System.exit(0);
     board.displayBoardWithMines();
@@ -189,7 +194,7 @@ public  void setupGame() {
    {
     UserInterface.selectGameModeAndSize();
    currentGameState = new GameState(profile.getPlayerName(), board);
-   FileIO.saveGameState(currentGameState);
+   gameStateDAO.saveGameState(currentGameState);
    //start the timer
    timer = new Timer();
    timer.start();
@@ -217,7 +222,7 @@ public  void setupGame() {
        
        public void Save(){
            
-       FileIO.saveMoveLog(moveLog);
+       moveDAO.saveMoveLog(moveLog);
        
        }
        public static void  BoardManager(int width, int height, int totalMines){
@@ -234,13 +239,13 @@ public  void setupGame() {
     }
 
     // Attempt to retrieve the existing profile for the given player name.
-    PlayerProfile existingProfile = FileIO.loadPlayerProfile(playerName);
+    PlayerProfile existingProfile = playerProfileDAO.loadPlayerProfile(playerName);
 
     if (existingProfile == null) {
        
         
         profile = new PlayerProfile(playerName);
-        FileIO.savePlayerProfile(profile);
+        playerProfileDAO.savePlayerProfile(profile);
         System.out.println("New player profile created for: " + playerName);
     } else {
         // If the profile does exist, load it.

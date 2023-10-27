@@ -13,12 +13,13 @@ import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 
 
-public class GameManager {
+public class GameManager  {
 
     private static Board board; 
     private static Timer timer;

@@ -28,11 +28,11 @@ public class GameController {
     
     // Starts the Minesweeper game, displaying the main menu and handling user choices.
 
-    public void startGame() {
-        gameManager.setupGame();
-        gameLoop();
-        gameManager.endGame();
-    }
+   // public void startGame() {
+       // gameManager.setupGame();
+       // gameLoop();
+       // gameManager.endGame();
+   // }
 //Runs the main game loop where players make moves and the game state is updated.
  public void gameLoop() {
     while (!gameManager.checkWin() && !gameManager.getGameOver()) {  // Continues as long as the game isn't won or lost

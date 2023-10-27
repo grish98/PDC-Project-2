@@ -170,7 +170,7 @@ public class UserInterface {
     return chosenDifficulty;
 }
 
-    
+    /*)
     public static int MainMenu() {
 
         while (true) {
@@ -198,7 +198,7 @@ public class UserInterface {
             }
         }
     }
-    
+    */
    public static void displayLeaderboard() {
     while (true) {
         System.out.println("View Leaderboard for which difficulty? (Easy, Medium, Hard or Q to Quit):");

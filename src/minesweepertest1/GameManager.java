@@ -13,13 +13,12 @@ import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 
 
-
-public class GameManager  {
+public class GameManager {
 
     private static Board board; 
     private static Timer timer;
@@ -37,11 +36,12 @@ public class GameManager  {
     private final MoveDAO moveDAO = new MoveDAO(dbManager);
     private final LeaderBoardDAO leaderboardDAO = new LeaderBoardDAO(dbManager);
     
+    /*
 public  void setupGame() {
   
     boolean bool = true;
     while (bool) { 
-
+       
 
 // This loop ensures the main menu is always shown after an certain actions
         int choice = UserInterface.MainMenu();
@@ -71,6 +71,7 @@ public  void setupGame() {
     
    
 }
+*/
     public  void displayBoard() 
     {
         board.displayBoard();
@@ -231,12 +232,10 @@ public  void setupGame() {
        board = new Board(width, height, totalMines);
        }
        
-    public static void NewPlayer() {
-    
-    String playerName = scanner.nextLine().trim();
-
-    if (playerName.isEmpty()) {
-        System.out.println("Invalid player name. Please enter a valid name.");
+   public void NewPlayer(String playerName) {
+    if (playerName == null || playerName.trim().isEmpty()) {
+        // Show an error message in the GUI
+        JOptionPane.showMessageDialog(null, "Invalid player name. Please enter a valid name.", "Error", JOptionPane.ERROR_MESSAGE);
         return;  // Exit the method if the player name is invalid.
     }
 
@@ -244,15 +243,13 @@ public  void setupGame() {
     PlayerProfile existingProfile = playerProfileDAO.loadPlayerProfile(playerName);
 
     if (existingProfile == null) {
-       
-        
         profile = new PlayerProfile(playerName);
         playerProfileDAO.savePlayerProfile(profile);
-        System.out.println("New player profile created for: " + playerName);
+        JOptionPane.showMessageDialog(null, "New player profile created for: " + playerName, "Info", JOptionPane.INFORMATION_MESSAGE);
     } else {
         // If the profile does exist, load it.
         profile = existingProfile;
-        System.out.println("Existing player profile loaded for: " + playerName);
+        JOptionPane.showMessageDialog(null, "Existing player profile loaded for: " + playerName, "Info", JOptionPane.INFORMATION_MESSAGE);
     }
 }
     

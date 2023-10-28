@@ -34,22 +34,22 @@ public class GameController {
        // gameManager.endGame();
    // }
 //Runs the main game loop where players make moves and the game state is updated.
- public void gameLoop() {
-    while (!gameManager.checkWin() && !gameManager.getGameOver()) {  // Continues as long as the game isn't won or lost
-        gameManager.displayBoard();
-        String action = userInterface.promptAction();
-        userInterface.handleAction(action);
-    }
-
-    if (gameManager.checkWin()) {
-        System.out.println("You win!");
-        gameManager.displayBoardWithMines();
-    } else if (gameManager.getGameOver()) {
-        System.out.println("You Lose!");
-        gameManager.displayBoardWithMines();
-    }
-}
-    
+// public void gameLoop() {
+//    while (!gameManager.checkWin() && !gameManager.getGameOver()) {  // Continues as long as the game isn't won or lost
+//        gameManager.displayBoard();
+//        String action = userInterface.promptAction();
+//        userInterface.handleAction(action);
+//    }
+//
+//    if (gameManager.checkWin()) {
+//        System.out.println("You win!");
+//        gameManager.displayBoardWithMines();
+//    } else if (gameManager.getGameOver()) {
+//        System.out.println("You Lose!");
+//        gameManager.displayBoardWithMines();
+//    }
+//}
+//    
    
     
 }

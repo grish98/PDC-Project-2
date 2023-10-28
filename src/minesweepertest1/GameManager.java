@@ -83,56 +83,31 @@ public  void setupGame() {
       return (board.allNonMineCellsRevealed() || board.allMinesFlagged());    
   }
   
-  // loads and display all saved games from a player, if none then player can choose to srtat a new game
-   public void loadPlayersGame() {
-     Map<String, GameState> savedGamesMap = gameStateDAO.loadGameState(profile.getPlayerName());
-    List<GameState> savedGames = new ArrayList<>(savedGamesMap.values());
-    
-    if (savedGames.isEmpty()) {
-        while(true) {
-            System.out.println("No saved games found for player: " + profile.getPlayerName());
-            System.out.println("Would you like to start a new game? (Y/N)");
-            String response = scanner.nextLine().trim();
-            if ("Y".equalsIgnoreCase(response)) {
-                newGame();
-                return;  // Return after starting a new game.
-            } else if ("N".equalsIgnoreCase(response)) {
-                return;  // Return to the main menu or caller method.
-            } else {
-                System.out.println("Invalid choice. Please select Y or N.");
-            }
-        }
-    } else {
-        while(true) {
-            System.out.println("Select a game to load:");
-            for (int i = 0; i < savedGames.size(); i++) {
-                System.out.println((i + 1) + ". Game ID: " + savedGames.get(i).getGameId());
-            }
-            
-            try {
-                int gameChoice = scanner.nextInt() - 1;  // Offset by 1 for 0-based indexing
-                scanner.nextLine();  // Clear the newline
-                
-                if (gameChoice >= 0 && gameChoice < savedGames.size()) {
-                    currentGameState = savedGames.get(gameChoice);
-                    board = currentGameState.getBoardState();
-                    loadAndExecuteMoveLog(currentGameState.getGameId());
-                    
-                    if (board == null) {
-                        System.out.println("Error: Loaded board is null.");
-                        return;  // Return to the main menu or caller method.
-                    }
-                    break;  // Exit the loop after successfully loading the game.
-                } else {
-                    System.out.println("Invalid choice. Please select a valid game to load.");
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a number.");
-                scanner.nextLine();  // Clear the invalid input
-            }
+public List<GameState> getSavedGames() {
+        Map<String, GameState> savedGamesMap = gameStateDAO.loadGameState(profile.getPlayerName());
+        return new ArrayList<>(savedGamesMap.values());
+    }
+
+    public GameState getSpecificGameState(String gameId) {
+        List<GameState> savedGames = getSavedGames();
+        return savedGames.stream()
+            .filter(game -> game.getGameId().equals(gameId))
+            .findFirst()
+            .orElse(null);
+    }
+
+    public void loadGame(String gameId) {
+        GameState gameState = getSpecificGameState(gameId);
+        if(gameState != null) {
+            currentGameState = gameState;
+            board = currentGameState.getBoardState();
+            loadAndExecuteMoveLog(currentGameState.getGameId());
         }
     }
-} 
+
+    public boolean hasSavedGames() {
+        return !getSavedGames().isEmpty();
+    }
    //loads all saved moves from certain game and executed them to continue from saved state
     private  void loadAndExecuteMoveLog(String gameId) {
     List<Move> movesForGame;

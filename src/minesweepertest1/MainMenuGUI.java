@@ -1,10 +1,13 @@
+package minesweepertest1;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import minesweepertest1.DifficultySettings;
 import minesweepertest1.GameManager;
-
+import minesweepertest1.GameState;
+import java.util.List;
 public class MainMenuGUI extends JFrame {
 private GameManager gameManager;
    
@@ -13,7 +16,7 @@ JButton newGameBtn = new JButton("New Game");
 JButton loadGameBtn = new JButton("Load Game");
 JButton leaderboardBtn = new JButton("Leaderboard");
 JButton exitBtn = new JButton("Exit");
-
+    
 
 
     public MainMenuGUI(GameManager gameManager) {
@@ -52,7 +55,7 @@ JButton exitBtn = new JButton("Exit");
         loadGameBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameManager.loadPlayersGame();
+                loadPlayersGame();
             }
         });
         panel.add(loadGameBtn);
@@ -178,6 +181,37 @@ public void displayLeaderboard() {
         
         // Display the string 'leaderboard' in your GUI
         JOptionPane.showMessageDialog(this, leaderboard, "Leaderboard", JOptionPane.INFORMATION_MESSAGE);
+    }
+}
+
+ public void loadPlayersGame() {
+    List<GameState> savedGamesList = gameManager.getSavedGames();
+
+    if (savedGamesList.isEmpty()) {
+        int option = JOptionPane.showConfirmDialog(null, 
+                "No saved games found. Would you like to start a new game?",
+                "No Saved Games",
+                JOptionPane.YES_NO_OPTION);
+
+        if (option == JOptionPane.YES_OPTION) {
+            gameManager.newGame();
+        } else {
+            return; // Return to the main menu or caller method.
+        }
+    } else {
+        GameState chosenGame = (GameState) JOptionPane.showInputDialog(
+            this,
+            "Select a game to load:",
+            "Load Game",
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            savedGamesList.toArray(),
+            savedGamesList.get(0)
+        );
+
+        if (chosenGame != null) {
+            gameManager.loadGame(chosenGame.getGameId());
+        }
     }
 }
 

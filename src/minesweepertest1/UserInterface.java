@@ -48,72 +48,72 @@ public class UserInterface {
      *
      * @param combinedInput
      */
-    public static void handleAction(String combinedInput) {
-        String[] parts = combinedInput.split(" ");
-        String actionType = parts[0];
-
-        switch (actionType) {
-            case "R":
-                if (parts.length != 3) {
-                    System.out.println("Invalid input for reveal. Please use the format: R [x] [y]");
-                    return;
-                }
-                int x,y;
-
-                try {
-                    x = Integer.parseInt(parts[1]);
-                    y = Integer.parseInt(parts[2]);
-
-                    gameManager.RevealCell(x, y);
-
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid coordinates provided for reveal.");
-                }
-                break;
-            case "F":
-                if (parts.length != 3) {
-                    System.out.println("Invalid input for flag. Please use the format: F [x] [y]");
-                    return;
-                }
-                try {
-                    x = Integer.parseInt(parts[1]);
-                    y = Integer.parseInt(parts[2]);
-
-                    gameManager.FlagCell(x, y);
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid coordinates provided for flag.");
-
-                }
-                break;
-            case "L":
-                gameManager.loadPlayersGame();
-                break;
-            case "S":
-                gameManager.Save();
-                System.out.println("Save Successful.");
-                break;
-            case "Q":
-
-                System.out.println("Would you like to save before quiting?(Y/N)");
-                String ans = scanner.nextLine();
-                
-                if (ans.equalsIgnoreCase("n")) {
-                    System.exit(0);
-                }
-                if (ans.equalsIgnoreCase("y")) {
-                    gameManager.Save();
-                    System.out.println("Save Successful.");
-                     System.out.println("Goodbye!");
-                    System.exit(0);
-                }
-
-                break;
-            
-            default:
-                System.out.println("Unknown action type.");
-                break;
-        }
-    }
+//    public static void handleAction(String combinedInput) {
+//        String[] parts = combinedInput.split(" ");
+//        String actionType = parts[0];
+//
+//        switch (actionType) {
+//            case "R":
+//                if (parts.length != 3) {
+//                    System.out.println("Invalid input for reveal. Please use the format: R [x] [y]");
+//                    return;
+//                }
+//                int x,y;
+//
+//                try {
+//                    x = Integer.parseInt(parts[1]);
+//                    y = Integer.parseInt(parts[2]);
+//
+//                    gameManager.RevealCell(x, y);
+//
+//                } catch (NumberFormatException e) {
+//                    System.out.println("Invalid coordinates provided for reveal.");
+//                }
+//                break;
+//            case "F":
+//                if (parts.length != 3) {
+//                    System.out.println("Invalid input for flag. Please use the format: F [x] [y]");
+//                    return;
+//                }
+//                try {
+//                    x = Integer.parseInt(parts[1]);
+//                    y = Integer.parseInt(parts[2]);
+//
+//                    gameManager.FlagCell(x, y);
+//                } catch (NumberFormatException e) {
+//                    System.out.println("Invalid coordinates provided for flag.");
+//
+//                }
+//                break;
+//            case "L":
+//                gameManager.loadPlayersGame();
+//                break;
+//            case "S":
+//                gameManager.Save();
+//                System.out.println("Save Successful.");
+//                break;
+//            case "Q":
+//
+//                System.out.println("Would you like to save before quiting?(Y/N)");
+//                String ans = scanner.nextLine();
+//                
+//                if (ans.equalsIgnoreCase("n")) {
+//                    System.exit(0);
+//                }
+//                if (ans.equalsIgnoreCase("y")) {
+//                    gameManager.Save();
+//                    System.out.println("Save Successful.");
+//                     System.out.println("Goodbye!");
+//                    System.exit(0);
+//                }
+//
+//                break;
+//            
+//            default:
+//                System.out.println("Unknown action type.");
+//                break;
+//        }
+//    }
 
     
     public static DifficultySettings selectGameModeAndSize() {

@@ -137,9 +137,20 @@ public List<GameState> getSavedGames() {
         return board.getGameover();
     }
 
-    public void displayBoardWithMines() {
-        board.displayBoardWithMines();
+    public void displayBoard(BoardGUI gui) {
+    gui.updateBoard();
+}
+    public void displayBoardWithMines(BoardGUI gui) {
+    for (int i = 0; i < board.getHeight(); i++) {
+        for (int j = 0; j < board.getWidth(); j++) {
+            Cell cell = board.getCell(i, j);
+            if (cell.isMine()) {
+                cell.reveal();
+            }
+        }
     }
+    gui.updateBoard();
+}
 
     public  void endGame() {
         
@@ -207,6 +218,7 @@ public List<GameState> getSavedGames() {
        board = new Board(width, height, totalMines);
        }
        
+       
    public void NewPlayer(String playerName) {
     if (playerName == null || playerName.trim().isEmpty()) {
         // Show an error message in the GUI
@@ -255,5 +267,8 @@ public List<GameState> getSavedGames() {
 
         
          return leaderboardMessage.toString();
+    }
+     public Board getBoard() {
+        return board;
     }
 }

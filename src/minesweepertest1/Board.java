@@ -34,7 +34,7 @@ public class Board {
     public Board(int width, int height) {
         this.width = width;
         this.height = height;
-        cells = new Cell[height][width];
+        this.cells = new Cell[height][width];
          for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 cells[i][j] = new Cell();
@@ -197,51 +197,51 @@ public boolean allMinesFlagged() {
 
       //displays the board, with a border around and numbers to indicate the cells cordinates
 
-  public void displayBoard() {
-    int maxWidth = String.valueOf(cells.length).length();  // Determine the width needed based on the number of rows/columns
-    
-    // Print column numbers on top
-    System.out.print(" ".repeat(maxWidth + 2));  // Initial space for row numbers
-    for (int x = 0; x < cells[0].length; x++) {
-        System.out.print((x + 1) + " ".repeat(maxWidth - String.valueOf(x + 1).length() + 1));
-    }
-    System.out.println();
-    
-    // Print upper border
-    System.out.println(" ".repeat(maxWidth + 1) + "-".repeat(cells[0].length * (maxWidth + 1)));
-    
-    // Print each row
-    for (int y = 0; y < cells.length; y++) {
-        // Print row number on the left
-        System.out.print((y + 1) + " ".repeat(maxWidth - String.valueOf(y + 1).length()) + "|");
-        
-        // Print cells in the row
-        for (int x = 0; x < cells[y].length; x++) {
-            System.out.print(" ");
-            cells[y][x].display();
-            System.out.print(" ".repeat(maxWidth - 1));
-        }
-        
-        // End of row
-        System.out.println("|");
-    }
-    
-    // Print lower border
-    System.out.println(" ".repeat(maxWidth + 1) + "-".repeat(cells[0].length * (maxWidth + 1)));
-}
- public void displayBoardWithMines() {
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            Cell cell = cells[i][j];
-            if (cell.isMine()) {
-                System.out.print("* ");
-            } else {
-                System.out.print(". ");
-            }
-        }
-        System.out.println();  //  next line after printing a row
-    }
-}
+//  public void displayBoard() {
+//    int maxWidth = String.valueOf(cells.length).length();  // Determine the width needed based on the number of rows/columns
+//    
+//    // Print column numbers on top
+//    System.out.print(" ".repeat(maxWidth + 2));  // Initial space for row numbers
+//    for (int x = 0; x < cells[0].length; x++) {
+//        System.out.print((x + 1) + " ".repeat(maxWidth - String.valueOf(x + 1).length() + 1));
+//    }
+//    System.out.println();
+//    
+//    // Print upper border
+//    System.out.println(" ".repeat(maxWidth + 1) + "-".repeat(cells[0].length * (maxWidth + 1)));
+//    
+//    // Print each row
+//    for (int y = 0; y < cells.length; y++) {
+//        // Print row number on the left
+//        System.out.print((y + 1) + " ".repeat(maxWidth - String.valueOf(y + 1).length()) + "|");
+//        
+//        // Print cells in the row
+//        for (int x = 0; x < cells[y].length; x++) {
+//            System.out.print(" ");
+//            cells[y][x].display();
+//            System.out.print(" ".repeat(maxWidth - 1));
+//        }
+//        
+//        // End of row
+//        System.out.println("|");
+//    }
+//    
+//    // Print lower border
+//    System.out.println(" ".repeat(maxWidth + 1) + "-".repeat(cells[0].length * (maxWidth + 1)));
+//}
+// public void displayBoardWithMines() {
+//    for (int i = 0; i < height; i++) {
+//        for (int j = 0; j < width; j++) {
+//            Cell cell = cells[i][j];
+//            if (cell.isMine()) {
+//                System.out.print("* ");
+//            } else {
+//                System.out.print(". ");
+//            }
+//        }
+//        System.out.println();  //  next line after printing a row
+//    }
+//}
    
 
 
@@ -340,23 +340,23 @@ public static Board fromString(String data) {
     
     //converts game into string, saving the size, amount of mines and and wether each mine and empty cells are located
    
-@Override
-public String toString() {
-    StringBuilder builder = new StringBuilder();
-    builder.append(width).append(",").append(height).append(",").append(totalMines);
-    
-    for (int y = 0; y < height; y++) {
-        builder.append(";");
-        for (int x = 0; x < width; x++) {
-            builder.append(cells[y][x].isMine() ? "1" : "0");
-            if (x < width - 1) {
-                builder.append(",");
-            }
-        }
-    }
-    
-    return builder.toString();
-}
+//@Override
+//public String toString() {
+//    StringBuilder builder = new StringBuilder();
+//    builder.append(width).append(",").append(height).append(",").append(totalMines);
+//    
+//    for (int y = 0; y < height; y++) {
+//        builder.append(";");
+//        for (int x = 0; x < width; x++) {
+//            builder.append(cells[y][x].isMine() ? "1" : "0");
+//            if (x < width - 1) {
+//                builder.append(",");
+//            }
+//        }
+//    }
+//    
+//    return builder.toString();
+//}
     
  
 

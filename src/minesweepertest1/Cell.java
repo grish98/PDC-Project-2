@@ -97,18 +97,20 @@ public class Cell {
       //  System.out.println("Debug: Displaying cell with state: " + (isMine ? "Mine" : "Non-Mine"));
         return String.valueOf(neighboringMines);
     }
-    public void display() {
+    public String display() {
+        String str = null;
         if (isFlagged) {
-            System.out.print("F");
+            str = "F";
         } else if (!isRevealed) {
-            System.out.print("-");
+             str = "-";
         } else if (isMine) {
-            System.out.print("M");
+             str = "M";
         } else if (neighboringMines >= 0) {
             System.out.print(neighboringMines);
         } else {
-            System.out.print(" ");
+             str=  " ";
         }
+        return str;
     }
     public static Cell fromString(String data) {
     StringTokenizer tokenizer = new StringTokenizer(data, ";");

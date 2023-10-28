@@ -4,9 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import minesweepertest1.DifficultySettings;
-import minesweepertest1.GameManager;
-import minesweepertest1.GameState;
 import java.util.List;
 public class MainMenuGUI extends JFrame {
 private GameManager gameManager;
@@ -196,7 +193,7 @@ public void displayLeaderboard() {
         if (option == JOptionPane.YES_OPTION) {
             gameManager.newGame();
         } else {
-            return; // Return to the main menu or caller method.
+            return; 
         }
     } else {
         GameState chosenGame = (GameState) JOptionPane.showInputDialog(

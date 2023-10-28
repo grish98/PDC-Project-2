@@ -258,23 +258,27 @@ public  void setupGame() {
     return entry;
     }
     
-    public  static void showLeaderboardForDifficulty(DifficultySettings difficulty) {
-    List<Leaderboard> entries = LeaderBoardDAO.loadLeaderboard();
+    public String showLeaderboardForDifficulty(DifficultySettings difficulty) {
+        List<Leaderboard> entries = LeaderBoardDAO.loadLeaderboard();
 
-    // Filter by difficulty and sort by time
-    List<Leaderboard> filteredEntries = entries.stream()
-    .filter(entry -> entry.getDifficulty().equalsIgnoreCase(difficulty.toString()))
-    .sorted(Comparator.comparingLong(Leaderboard::getTime))
-    .collect(Collectors.toList());
+        // Filter by difficulty and sort by time
+        List<Leaderboard> filteredEntries = entries.stream()
+                .filter(entry -> entry.getDifficulty().equalsIgnoreCase(difficulty.toString()))
+                .sorted(Comparator.comparingLong(Leaderboard::getTime))
+                .collect(Collectors.toList());
 
-    System.out.println("Leaderboard for " + difficulty + ":");
-    if (filteredEntries.isEmpty()) {
-        System.out.println("No records available for this difficulty.");
-    } else {
-        for (int i = 0; i < filteredEntries.size(); i++) {
-            Leaderboard entry = filteredEntries.get(i);
-            System.out.println((i + 1) + ". " + entry.getPlayerName() + ": " + entry.getTime() + " seconds");
+        StringBuilder leaderboardMessage = new StringBuilder("Leaderboard for " + difficulty + ":\n");
+
+        if (filteredEntries.isEmpty()) {
+            leaderboardMessage.append("No records available for this difficulty.");
+        } else {
+            for (int i = 0; i < filteredEntries.size(); i++) {
+                Leaderboard entry = filteredEntries.get(i);
+                leaderboardMessage.append((i + 1) + ". " + entry.getPlayerName() + ": " + entry.getTime() + " seconds\n");
+            }
         }
+
+        
+         return leaderboardMessage.toString();
     }
-}
 }

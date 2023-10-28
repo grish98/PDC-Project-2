@@ -199,30 +199,30 @@ public class UserInterface {
         }
     }
     */
-   public static void displayLeaderboard() {
-    while (true) {
-        System.out.println("View Leaderboard for which difficulty? (Easy, Medium, Hard or Q to Quit):");
-        String input = scanner.nextLine().trim().toLowerCase();
-
-        switch (input) {
-            case "easy":
-            case "e":
-                GameManager.showLeaderboardForDifficulty(DifficultySettings.EASY);
-                break;
-            case "medium":
-            case "m":
-                GameManager.showLeaderboardForDifficulty(DifficultySettings.MEDIUM);
-                break;
-            case "hard":
-            case "h":
-                GameManager.showLeaderboardForDifficulty(DifficultySettings.HARD);
-                break;
-            case "q":
-                return;  //  exit the leaderboard 
-            default:
-                System.out.println("Invalid choice. Please try again.");
-        }
-    }
-}
-   
+//   public static void displayLeaderboard() {
+//    while (true) {
+//        System.out.println("View Leaderboard for which difficulty? (Easy, Medium, Hard or Q to Quit):");
+//        String input = scanner.nextLine().trim().toLowerCase();
+//
+//        switch (input) {
+//            case "easy":
+//            case "e":
+//                GameManager.showLeaderboardForDifficulty(DifficultySettings.EASY);
+//                break;
+//            case "medium":
+//            case "m":
+//                GameManager.showLeaderboardForDifficulty(DifficultySettings.MEDIUM);
+//                break;
+//            case "hard":
+//            case "h":
+//                GameManager.showLeaderboardForDifficulty(DifficultySettings.HARD);
+//                break;
+//            case "q":
+//                return;  //  exit the leaderboard 
+//            default:
+//                System.out.println("Invalid choice. Please try again.");
+//        }
+//    }
+//}
+//   
 }

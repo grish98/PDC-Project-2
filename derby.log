@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Fri Oct 27 22:08:32 NZDT 2023:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-018b-7064-6e67-00000757f9d0 
+Sat Oct 28 18:11:30 NZDT 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-018b-74b1-ca31-0000075792c8 
 on database directory C:\Users\grish\OneDrive\Documents\NetBeansProjects\MinesweeperTest1\MineSweeperEDB_Test with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@4f4a7090 
 Loaded from file:/C:/Users/grish/OneDrive/Documents/NetBeansProjects/MinesweeperTest1/lib/derby.jar
 java.vendor=Oracle Corporation

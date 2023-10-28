@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import minesweepertest1.DifficultySettings;
 import minesweepertest1.GameManager;
 
 public class MainMenuGUI extends JFrame {
@@ -80,13 +81,105 @@ JButton exitBtn = new JButton("Exit");
     }
 
     
-    public void selectGameModeAndSize() {
-       
+    public DifficultySettings selectGameModeAndSize() {
+    DifficultySettings chosenDifficulty = null;
+
+    Object[] difficultyOptions = {"Easy", "Medium", "Hard", "Quit"};
+
+    while (chosenDifficulty == null) {
+        int choice = JOptionPane.showOptionDialog(
+            this, 
+            "Select game difficulty:", 
+            "Difficulty Selection", 
+            JOptionPane.DEFAULT_OPTION, 
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            difficultyOptions,
+            difficultyOptions[0]
+        );
+
+        switch (choice) {
+            case 0:
+                chosenDifficulty = DifficultySettings.EASY;
+                break;
+            case 1:
+                chosenDifficulty = DifficultySettings.MEDIUM;
+                break;
+            case 2:
+                chosenDifficulty = DifficultySettings.HARD;
+                break;
+            case 3:
+            default:
+                System.exit(0);
+        }
     }
 
-    public void displayLeaderboard() {
-     
+    int[][] configurations = chosenDifficulty.getConfigurations();
+    Object[] sizeOptions = new String[configurations.length];
+    for (int i = 0; i < configurations.length; i++) {
+        sizeOptions[i] = configurations[i][0] + "x" + configurations[i][1] + " with " + configurations[i][2] + " mines";
     }
+
+    int boardChoice = JOptionPane.showOptionDialog(
+        this, 
+        "Available sizes for " + chosenDifficulty + " mode:", 
+        "Board Size Selection", 
+        JOptionPane.DEFAULT_OPTION, 
+        JOptionPane.QUESTION_MESSAGE,
+        null,
+        sizeOptions,
+        sizeOptions[0]
+    );
+
+    if (boardChoice == -1) {
+        // User closed the dialog without making a selection
+        System.exit(0);
+    }
+
+    int[] selectedConfig = configurations[boardChoice];
+    GameManager.BoardManager(selectedConfig[0], selectedConfig[1], selectedConfig[2]);
+
+    return chosenDifficulty;
+}
+
+public void displayLeaderboard() {
+    Object[] difficultyOptions = {"Easy", "Medium", "Hard", "Quit"};
+    DifficultySettings chosenDifficulty = null;
+
+    while (chosenDifficulty == null) {
+        int choice = JOptionPane.showOptionDialog(
+            this, 
+            "View Leaderboard for which difficulty?", 
+            "Leaderboard Selection", 
+            JOptionPane.DEFAULT_OPTION, 
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            difficultyOptions,
+            difficultyOptions[0]
+        );
+
+        switch (choice) {
+            case 0:
+                chosenDifficulty = DifficultySettings.EASY;
+                break;
+            case 1:
+                chosenDifficulty = DifficultySettings.MEDIUM;
+                break;
+            case 2:
+                chosenDifficulty = DifficultySettings.HARD;
+                break;
+            case 3:
+            default:
+                return;  // exit the leaderboard
+        }
+
+        // Call the modified method from GameManager
+        String leaderboard = gameManager.showLeaderboardForDifficulty(chosenDifficulty);
+        
+        // Display the string 'leaderboard' in your GUI
+        JOptionPane.showMessageDialog(this, leaderboard, "Leaderboard", JOptionPane.INFORMATION_MESSAGE);
+    }
+}
 
   public static void main(String[] args) {
     GameManager gameManager = new GameManager();

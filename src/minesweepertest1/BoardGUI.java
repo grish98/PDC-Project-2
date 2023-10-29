@@ -20,8 +20,8 @@ import java.awt.event.ActionListener;
     private JButton[][] boardButtons;
     private GameManager gameManager;
     private Board board;
-   private JButton saveButton;
-    
+    private JButton saveButton;
+    private JLabel timerLabel;
     public BoardGUI(GameManager gameManager) {
         
         this.gameManager = gameManager;
@@ -29,26 +29,32 @@ import java.awt.event.ActionListener;
         int rows = board.getHeight();
         int columns = board.getWidth();
 
-        setTitle("Minesweeper Game Board");
-        setSize(1000, 1000);  
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  // Close only this window
-        setLocationRelativeTo(null);  // Center the window on the screen
+setTitle("Minesweeper Game Board");
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
         
-        // Initialize the save button and its action listener
-        saveButton = new JButton("Save Game");
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                gameManager.Save();  // Assuming the GameManager class has a Save() method
-            }
-        });
-        
-        boardButtons = new JButton[rows][columns];
+        // Set the layout manager first before adding any components
         setLayout(new BorderLayout());
 
-        JPanel boardPanel = new JPanel(new GridLayout(rows, columns));  // Create a panel for the board buttons
+        // Timer setup
+        timerLabel = new JLabel("Time: 0 seconds");
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(timerLabel, BorderLayout.EAST);
+        add(topPanel, BorderLayout.NORTH);
+        
+        javax.swing.Timer guiTimer = new javax.swing.Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                long time = gameManager.getTimerDuration();
+                timerLabel.setText("Time: " + time + " seconds");
+            }
+        });
+        guiTimer.start();
 
-        // Add the buttons to the board panel
+        // Now setup the board
+        boardButtons = new JButton[rows][columns];
+        JPanel boardPanel = new JPanel(new GridLayout(rows, columns));
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 JButton button = new JButton();
@@ -57,13 +63,22 @@ import java.awt.event.ActionListener;
                 boardButtons[i][j] = button;
             }
         }
+        add(boardPanel, BorderLayout.CENTER);
 
-        add(boardPanel, BorderLayout.CENTER);  // Add the board panel to the center of the main frame
+        // Initialize the save button
+        saveButton = new JButton("Save Game");
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameManager.Save();
+            }
+        });
         
-        JPanel saveButtonPanel = new JPanel();  // Create a panel for the save button
+        JPanel saveButtonPanel = new JPanel();
         saveButtonPanel.add(saveButton);
-        add(saveButtonPanel, BorderLayout.SOUTH);  // Add the save button panel to the bottom of the main frame
-         updateBoard();  // Call updateBoard() to set the initial appearance of buttons
+        add(saveButtonPanel, BorderLayout.SOUTH);
+
+        updateBoard();
             }
         
         
@@ -94,7 +109,7 @@ import java.awt.event.ActionListener;
                     button.setText("F");
                     button.setBackground(Color.YELLOW);
                 } else {
-                    
+                    button.setText("");
                     button.setBackground(Color.GRAY);
                 }
             }

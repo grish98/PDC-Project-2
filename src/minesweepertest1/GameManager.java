@@ -101,7 +101,9 @@ public List<GameState> getSavedGames() {
     for (Move move : movesForGame) {
         executeMove(move);
     }
-}// executes a move
+}
+
+// executes a move
    private  void executeMove(Move move) {
     int row = move.getx();
     int col = move.gety();
@@ -194,7 +196,7 @@ public List<GameState> getSavedGames() {
     }
     
     board.revealCell(x, y, currentGameState.getGameId());  // Pass gameId as an argument
-    Move revealMove = new Move(profile.getPlayerName(), currentGameState.getGameId(), x-1, y-1, Move.MoveType.REVEAL);
+    Move revealMove = new Move(profile.getPlayerName(), currentGameState.getGameId(), x, y, Move.MoveType.REVEAL);
     moveLog.add(revealMove);
 
     // Check end game conditions
@@ -209,7 +211,7 @@ public List<GameState> getSavedGames() {
     }
 
     board.toggleCellFlag(x, y, currentGameState.getGameId());
-    Move flagMove = new Move(profile.getPlayerName(), currentGameState.getGameId(), x-1, y-1, Move.MoveType.FLAG_TOGGLE);
+    Move flagMove = new Move(profile.getPlayerName(), currentGameState.getGameId(), x, y, Move.MoveType.FLAG_TOGGLE);
     moveLog.add(flagMove);
 
     // Check end game conditions
@@ -306,5 +308,7 @@ public void setGameEventListener(GameEventListener listener) {
     }
 }
 
-
+public long getTimerDuration(){
+return timer.getDuration();
+        }
 }

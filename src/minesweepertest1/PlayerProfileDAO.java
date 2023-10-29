@@ -29,26 +29,27 @@ public final class PlayerProfileDAO implements DAO{
 
     @Override
     public void ensureTableExists() {
-        try (Connection conn = dbManager.getConnection();
-             Statement stmt = conn.createStatement()) {
-             
-            // Check if the table already exists. If not, create it.
-            ResultSet tables = conn.getMetaData().getTables(null, null, "PLAYERPROFILE", null);
-            if (!tables.next()) {
-                stmt.execute("CREATE TABLE PLAYERPROFILE ("
-                        + "PLAYERNAME VARCHAR(255) PRIMARY KEY,"
-                        + "WINS INT,"
-                        + "LOSSES INT,"
-                        + "POINTS INT"
-                        + ")");
-
-
-
-            }
-        } catch (SQLException e) {
-            System.err.println("Error ensuring table exists:(profile) " + e.getMessage());
-            e.printStackTrace();
+        
+   Connection conn = dbManager.getConnection();
+    if (conn == null) {
+        System.out.println("Cannot establish a connection to the database. Exiting application.");
+        System.exit(1);  // Exit 
+    }
+    
+    try (Statement stmt = conn.createStatement()) {
+        // Check if the table already exists. If not, create it.
+        ResultSet tables = conn.getMetaData().getTables(null, null, "PLAYERPROFILE", null);
+        if (!tables.next()) {
+            stmt.execute("CREATE TABLE PLAYERPROFILE ("
+                    + "PLAYERNAME VARCHAR(255) PRIMARY KEY,"
+                    + "WINS INT,"
+                    + "LOSSES INT,"
+                    + "POINTS INT"
+                    + ")");
         }
+    } catch (SQLException e) {
+        System.out.println("Error ensuring table exists:(profile) " + e.getMessage());
+    }
     }
 
    public List<PlayerProfile> loadAllPlayerProfiles() {

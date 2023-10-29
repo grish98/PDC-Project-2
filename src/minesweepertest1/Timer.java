@@ -22,6 +22,10 @@ public class Timer {
     }
 
     public long getDuration() {
-        return (endTime - startTime)/1000;
+        if (endTime == 0) { // If the timer hasn't stopped
+        return (System.currentTimeMillis() - startTime) / 1000;
+    } else {
+        return (endTime - startTime) / 1000;
+    }
     }
 }

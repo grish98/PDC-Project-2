@@ -46,12 +46,13 @@ public final class GameStateDAO implements DAO {
             }
         } catch (SQLException e) {
             System.err.println("Error ensuring table exists:GAMESTATE " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
    
    public void saveGameState(GameState gameState) {
+       
+       
         String insertSQL = "INSERT INTO GAMESTATE (GAMEID, PLAYERNAME, BOARDSTATE) VALUES (?, ?, ?)";
 
         try (Connection conn = dbManager.getConnection();

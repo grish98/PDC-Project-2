@@ -10,46 +10,53 @@ package minesweepertest1;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
 /**
  *
  * @author grish
  */
-public class GameController {
+
+public class GameController implements GameEventListener {
 
     private GameManager gameManager;
-    private UserInterface userInterface;
-   
-
+    private BoardGUI boardGUI;
+    private MainMenuGUI mainMenu;
+    
     public GameController() {
         this.gameManager = new GameManager();
-        this.userInterface = new UserInterface(gameManager);
+        this.gameManager.setGameEventListener(this);
+        this.mainMenu = new MainMenuGUI(this.gameManager,this);
+        mainMenu.setVisible(true);
     }
     
-    // Starts the Minesweeper game, displaying the main menu and handling user choices.
-
-    public void startGame() {
-        gameManager.setupGame();
-        gameLoop();
-        gameManager.endGame();
+    public void startNewGame() {
+        
+        boardGUI = gameManager.newGame(mainMenu);
+        if (boardGUI == null) {
+            JOptionPane.showMessageDialog(null, "Failed to initialize the game board.", "Error", JOptionPane.ERROR_MESSAGE);
+           
+        }
     }
-//Runs the main game loop where players make moves and the game state is updated.
- public void gameLoop() {
-    while (!gameManager.checkWin() && !gameManager.getGameOver()) {  // Continues as long as the game isn't won or lost
-        gameManager.displayBoard();
-        String action = userInterface.promptAction();
-        userInterface.handleAction(action);
+    
+     public void startLoadGame(String gameId) {
+        
+        boardGUI = gameManager.loadGame(gameId);
+        if (boardGUI == null) {
+            JOptionPane.showMessageDialog(null, "Failed to initialize the game board.", "Error", JOptionPane.ERROR_MESSAGE);
+           
+        }
     }
-
-    if (gameManager.checkWin()) {
-        System.out.println("You win!");
-        gameManager.displayBoardWithMines();
-    } else if (gameManager.getGameOver()) {
-        System.out.println("You Lose!");
-        gameManager.displayBoardWithMines();
+    
+    @Override
+    public void onGameEnd(String message) {
+        System.out.println("onGameEnd called in GameController with message: " + message);
+        if (boardGUI != null) {
+            boardGUI.showGameOutcome(message);
+        } else {
+            System.out.println("boardGUI is null in GameController");
+           
+        }
     }
 }
-    
-   
-    
-}
+

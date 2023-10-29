@@ -43,7 +43,6 @@ public final class MoveDAO implements DAO{
             }
         } catch (SQLException e) {
             System.err.println("Error ensuring table exists:(move) " + e.getMessage());
-            e.printStackTrace();
         }
     }
     

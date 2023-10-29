@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 public class MainMenuGUI extends JFrame {
 private GameManager gameManager;
@@ -20,11 +21,25 @@ JButton exitBtn = new JButton("Exit");
         this.gameManager = gameManager;
         this.controller = controller;
         //ask for player name
-        String playerName = JOptionPane.showInputDialog(null, "Enter your name:", "Player Name", JOptionPane.QUESTION_MESSAGE);
-    if (playerName == null || playerName.trim().isEmpty()) {
-    System.exit(0);
+        
+         // Repeatedly ask for player name until a valid name is entered
+        // Repeatedly ask for player name until a valid name is entered
+    String playerName = null;
+    while (playerName == null || playerName.trim().isEmpty()) {
+        playerName = JOptionPane.showInputDialog(null, "Enter your name:", "Player Name", JOptionPane.QUESTION_MESSAGE);
+        
+        if (playerName == null) {
+            // If the user closes the input dialog or clicks the Cancel button
+            int choice = JOptionPane.showConfirmDialog(null, "You must enter a name to continue. Do you want to try again?", "Invalid Name", JOptionPane.YES_NO_OPTION);
+            
+            if (choice == JOptionPane.NO_OPTION) {
+                System.exit(0);
+            }
+        } else if (playerName.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Name cannot be empty. Please enter a valid name.", "Invalid Name", JOptionPane.ERROR_MESSAGE);
         }
-    //
+    }
+    
     gameManager.NewPlayer(playerName);
 
     
@@ -184,9 +199,9 @@ public void displayLeaderboard() {
 
     if (savedGamesList.isEmpty()) {
         int option = JOptionPane.showConfirmDialog(null, 
-                "No saved games found. Would you like to start a new game?",
-                "No Saved Games",
-                JOptionPane.YES_NO_OPTION);
+            "No saved games found. Would you like to start a new game?",
+            "No Saved Games",
+            JOptionPane.YES_NO_OPTION);
 
         if (option == JOptionPane.YES_OPTION) {
             controller.startNewGame();
@@ -194,17 +209,26 @@ public void displayLeaderboard() {
             return; 
         }
     } else {
-        GameState chosenGame = (GameState) JOptionPane.showInputDialog(
+        // Create a list of generic game names based on the number of saved games
+        List<String> gameNames = new ArrayList<>();
+        for (int i = 1; i <= savedGamesList.size(); i++) {
+            gameNames.add("Game " + i);
+        }
+
+        String chosenGameName = (String) JOptionPane.showInputDialog(
             this,
             "Select a game to load:",
             "Load Game",
             JOptionPane.QUESTION_MESSAGE,
             null,
-            savedGamesList.toArray(),
-            savedGamesList.get(0)
+            gameNames.toArray(),
+            gameNames.get(0)
         );
 
-        if (chosenGame != null) {
+        if (chosenGameName != null) {
+            // Map the chosen game name back to the GameState list to get the actual game ID
+            int index = gameNames.indexOf(chosenGameName);
+            GameState chosenGame = savedGamesList.get(index);
             controller.startLoadGame(chosenGame.getGameId());
         }
     }

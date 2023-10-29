@@ -70,7 +70,12 @@ setTitle("Minesweeper Game Board");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameManager.Save();
+               if (gameManager.getGameOver()) { // Assuming there's a method like this to check game status
+            JOptionPane.showMessageDialog(null, "Finished game cannot be saved.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            gameManager.Save();
+            JOptionPane.showMessageDialog(null, "Game saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        }
             }
         });
         

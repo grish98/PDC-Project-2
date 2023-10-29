@@ -46,7 +46,6 @@ public final class GameStateDAO implements DAO {
             }
         } catch (SQLException e) {
             System.err.println("Error ensuring table exists:GAMESTATE " + e.getMessage());
-            e.printStackTrace();
         }
     }
 

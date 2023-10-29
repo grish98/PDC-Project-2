@@ -80,23 +80,14 @@ public class Cell {
         this.isFlagged = flagged;
     }
 
-    @Override
-    public String toString() {
-        if (isFlagged) {
-            System.out.print("F");
-        } else if (!isRevealed) {
-            System.out.print("-");
-        } else if (isMine) {
-            System.out.print("*");
-        } else if (neighboringMines > 0) {
-            System.out.print(neighboringMines);
-        } else {
-            System.out.print(" ");
-        }
-    
-      //  System.out.println("Debug: Displaying cell with state: " + (isMine ? "Mine" : "Non-Mine"));
-        return String.valueOf(neighboringMines);
-    }
+   @Override
+public String toString() {
+    return (isMine ? "1" : "0") + "," +
+           (isRevealed ? "1" : "0") + "," +
+           (isFlagged ? "1" : "0");
+}
+
+
     public String display() {
         String str = null;
         if (isFlagged) {
@@ -113,20 +104,15 @@ public class Cell {
         return str;
     }
     public static Cell fromString(String data) {
-    StringTokenizer tokenizer = new StringTokenizer(data, ";");
-
-    if (tokenizer.countTokens() != 3) {
+    String[] tokens = data.split(",");
+    if (tokens.length != 3) {
         throw new IllegalArgumentException("Invalid cell data format.");
     }
 
-    boolean isMine = "1".equals(tokenizer.nextToken());
-    boolean isRevealed = "1".equals(tokenizer.nextToken());
-    boolean isFlagged = "1".equals(tokenizer.nextToken());
-
     Cell cell = new Cell();
-    cell.setMine(isMine);
-    cell.setRevealed(isRevealed);
-    cell.setFlagged(isFlagged);
+    cell.setMine("1".equals(tokens[0]));
+    cell.setRevealed("1".equals(tokens[1]));
+    cell.setFlagged("1".equals(tokens[2]));
 
     return cell;
 }

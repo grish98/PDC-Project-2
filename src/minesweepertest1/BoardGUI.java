@@ -20,7 +20,7 @@ import java.awt.event.ActionListener;
     private JButton[][] boardButtons;
     private GameManager gameManager;
     private Board board;
-   
+   private JButton saveButton;
     
     public BoardGUI(GameManager gameManager) {
         
@@ -33,22 +33,42 @@ import java.awt.event.ActionListener;
         setSize(1000, 1000);  
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  // Close only this window
         setLocationRelativeTo(null);  // Center the window on the screen
-
+        
+        // Initialize the save button and its action listener
+        saveButton = new JButton("Save Game");
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameManager.Save();  // Assuming the GameManager class has a Save() method
+            }
+        });
+        
         boardButtons = new JButton[rows][columns];
-        setLayout(new GridLayout(rows, columns));
+        setLayout(new BorderLayout());
 
-        // Create buttons and add them to the GUI
+        JPanel boardPanel = new JPanel(new GridLayout(rows, columns));  // Create a panel for the board buttons
+
+        // Add the buttons to the board panel
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 JButton button = new JButton();
                 button.addMouseListener(new CellMouseListener(j, i, gameManager, this));
-                add(button);
+                boardPanel.add(button);
                 boardButtons[i][j] = button;
             }
         }
+
+        add(boardPanel, BorderLayout.CENTER);  // Add the board panel to the center of the main frame
+        
+        JPanel saveButtonPanel = new JPanel();  // Create a panel for the save button
+        saveButtonPanel.add(saveButton);
+        add(saveButtonPanel, BorderLayout.SOUTH);  // Add the save button panel to the bottom of the main frame
+         updateBoard();  // Call updateBoard() to set the initial appearance of buttons
+            }
         
         
-    }
+        
+    
     
        public void updateBoard() {
         for (int i = 0; i < board.getHeight(); i++) {
@@ -57,12 +77,13 @@ import java.awt.event.ActionListener;
                 JButton button = boardButtons[i][j];
                 
                 if (cell.isRevealed()) {
+                    
                     if (cell.isMine()) {
-                        button.setText("*");  // Display mine symbol
+                        button.setText("*");
                         button.setBackground(Color.RED);
                     } else {
                         int neighboringMines = cell.getNeighboringMines();
-                        if (neighboringMines > 0) {
+                        if (neighboringMines >= 0) {
                             button.setText(String.valueOf(neighboringMines));
                         } else {
                             button.setText("");
@@ -70,10 +91,10 @@ import java.awt.event.ActionListener;
                         button.setBackground(Color.LIGHT_GRAY);
                     }
                 } else if (cell.isFlagged()) {
-                    button.setText("F");  // Display flag symbol
+                    button.setText("F");
                     button.setBackground(Color.YELLOW);
                 } else {
-                    button.setText("");
+                    
                     button.setBackground(Color.GRAY);
                 }
             }

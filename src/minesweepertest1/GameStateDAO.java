@@ -52,6 +52,8 @@ public final class GameStateDAO implements DAO {
 
    
    public void saveGameState(GameState gameState) {
+       
+       
         String insertSQL = "INSERT INTO GAMESTATE (GAMEID, PLAYERNAME, BOARDSTATE) VALUES (?, ?, ?)";
 
         try (Connection conn = dbManager.getConnection();

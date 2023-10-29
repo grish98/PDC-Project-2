@@ -274,69 +274,44 @@ public boolean getGameover() {
             this.height = height;
      
     }
-    //converts string representation data of a board into a board object
+  
 public static Board fromString(String data) {
-    System.out.println("Attempting to deserialize: " + data);
-
     StringTokenizer tokenizer = new StringTokenizer(data, ";");
-    
+
+    // Extract dimensions
     if (!tokenizer.hasMoreTokens()) {
         throw new IllegalArgumentException("Expected dimensions data missing.");
     }
-    
+
     StringTokenizer dimensionsTokenizer = new StringTokenizer(tokenizer.nextToken(), ",");
-    System.out.println("Total dimension tokens: " + dimensionsTokenizer.countTokens());
-    
     if (dimensionsTokenizer.countTokens() < 3) {
         throw new IllegalArgumentException("Incomplete dimensions data.");
     }
-    
+
     int width = Integer.parseInt(dimensionsTokenizer.nextToken());
     int height = Integer.parseInt(dimensionsTokenizer.nextToken());
     int expectedTotalMines = Integer.parseInt(dimensionsTokenizer.nextToken());
-    
+
     // Check if the parsed values are reasonable
     if (width <= 0 || height <= 0 || expectedTotalMines < 0 || expectedTotalMines > width * height) {
         throw new IllegalArgumentException("Invalid board dimensions or mine count.");
     }
-    
-    System.out.println("Width: " + width + ", Height: " + height + ", Expected Mines: " + expectedTotalMines);
-    
+
     Board board = new Board(width, height);
-  
-    int actualTotalMines = 0;  // To keep track of the mines placed
 
     for (int y = 0; y < height; y++) {
         if (!tokenizer.hasMoreTokens()) {
             throw new IllegalArgumentException("Expected row data for row " + y + " missing.");
         }
 
-        StringTokenizer rowTokenizer = new StringTokenizer(tokenizer.nextToken(), ",");
-        System.out.println("Tokens in row " + y + ": " + rowTokenizer.countTokens());
-        
+        String[] rowTokens = tokenizer.nextToken().split(",");
         for (int x = 0; x < width; x++) {
-            if (!rowTokenizer.hasMoreTokens()) {
-                throw new IllegalArgumentException("Expected cell data for row " + y + " column " + x + " missing.");
-            }
-
-            if("1".equals(rowTokenizer.nextToken())) {
-                board.cells[y][x].setMine(true);
-                actualTotalMines++;
-                System.out.println("Mine placed at (" + x + ", " + y + ")");
-            }
+            String cellData = String.join(",", rowTokens[x*3], rowTokens[x*3+1], rowTokens[x*3+2]);
+            board.cells[y][x] = Cell.fromString(cellData);
         }
     }
 
-    System.out.println("Expected mines: " + expectedTotalMines + ", Actual mines placed: " + actualTotalMines);
-    
-    if (expectedTotalMines != actualTotalMines) {
-        System.out.println("WARNING: Expected number of mines and actual mines placed are different!");
-    }
-  
     board.calculateandSetNeighboringMines();
-    board.setAllCellsToNotFlagged();
-    board.setAllCellsToNotRevealed();
-    board.updateMinesOnBoard();
     return board;
 }
     
@@ -350,13 +325,12 @@ public String toString() {
     for (int y = 0; y < height; y++) {
         builder.append(";");
         for (int x = 0; x < width; x++) {
-            builder.append(cells[y][x].isMine() ? "1" : "0");
+            builder.append(cells[y][x].toString());
             if (x < width - 1) {
                 builder.append(",");
             }
         }
     }
-    
     return builder.toString();
 }
     

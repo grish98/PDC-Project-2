@@ -135,32 +135,6 @@ public List<GameState> getSavedGames() {
     gui.updateBoard();
 }
 
-//    public  void endGame() {
-//        
-//        
-//    if (checkWin()) {
-//        // increate number of wins in player profile
-//        profile.incrementWins();
-//        System.out.println("Congratulations! You won!");
-//        //stops the timer and saves thetime taken to comeplete teh game
-//      timer.stop();
-//       //System.out.println(timer.getDuration());
-//      leaderboardDAO.saveToLeaderboard(SaveToLeaderboard());
-//       
-//      
-//    } if(getGameOver()){
-//        
-//        profile.incrementLosses();
-//        System.out.println("Sorry, you lost.");
-//        timer.stop();
-//       // System.out.println(timer.getDuration());
-//    }
-//    playerProfileDAO.savePlayerProfile(profile);
-//    System.out.println("Thank you for playing!");
-//    System.exit(0);
-//    //board.displayBoardWithMines();
-//        
-//}
     
  public String endGame() {
     String message = "";
@@ -276,12 +250,18 @@ public List<GameState> getSavedGames() {
 }
     
     public Leaderboard SaveToLeaderboard(){
+        //save the entry to leaderboard, the chosen difficiulty will be null for loaded games, in which case it is not saved to leaderboard and returns null instead
         
-        System.out.println("profile is: " + profile);
-        System.out.println("chosenDifficulty is: " + difficulty);
-        System.out.println("timer is: " + timer);
+       if(difficulty !=null) {
+           
     Leaderboard entry = new Leaderboard(profile.getPlayerName(), difficulty.toString(), timer.getDuration());
+    System.out.println("profile is: " + profile);
+    System.out.println("chosenDifficulty is: " + difficulty);
+    System.out.println("timer is: " + timer);
     return entry;
+    }
+       else return null;
+       
     }
     
     public String showLeaderboardForDifficulty(DifficultySettings difficulty) {

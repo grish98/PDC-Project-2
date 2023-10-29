@@ -52,6 +52,12 @@ public class LeaderBoardDAO implements DAO{
     }
 
     public void saveToLeaderboard(Leaderboard newEntry) {
+      if (newEntry == null) {
+        // will not save if entry is null, null entry will be caused from a loaded game, loaded games will not count towards the leadeer board only new games
+        
+        return;
+    }  
+        
     String insertSQL = "INSERT INTO LEADERBOARD (PLAYERNAME, DIFFICULTY, TIME) VALUES (?, ?, ?)";
     String selectSQL = "SELECT * FROM LEADERBOARD WHERE DIFFICULTY = ? ORDER BY TIME ASC";
     String deleteSQL = "DELETE FROM LEADERBOARD WHERE PLAYERNAME = ? AND DIFFICULTY = ? AND TIME = ?";

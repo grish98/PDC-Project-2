@@ -19,9 +19,9 @@ import java.sql.SQLException;
 public class DataBaseManager {
     private static final String USER_NAME = "grisham";
     private static final String PASSWORD = "grisham";
-   // private static final String URL = "jdbc:derby:MineSweeperEDB;create=true";
+    private static final String URL = "jdbc:derby:MineSweeperEDB;create=true";
     //for testing purposes:
-    private static final String URL = "jdbc:derby:MineSweeperEDB_Test;create=true"; 
+    //private static final String URL = "jdbc:derby:MineSweeperEDB_Test;create=true"; 
     
     private Connection conn;
 

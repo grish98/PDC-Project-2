@@ -229,19 +229,18 @@ public boolean allMinesFlagged() {
 //    // Print lower border
 //    System.out.println(" ".repeat(maxWidth + 1) + "-".repeat(cells[0].length * (maxWidth + 1)));
 //}
-// public void displayBoardWithMines() {
-//    for (int i = 0; i < height; i++) {
-//        for (int j = 0; j < width; j++) {
-//            Cell cell = cells[i][j];
-//            if (cell.isMine()) {
-//                System.out.print("* ");
-//            } else {
-//                System.out.print(". ");
-//            }
-//        }
-//        System.out.println();  //  next line after printing a row
-//    }
-//}
+
+
+public void RevealMines() {
+    for (int i = 0; i < height; i++) {
+       for (int j = 0; j < width; j++) {
+           Cell cell = cells[i][j];
+            if (cell.isMine()) {
+               cell.reveal();
+            }
+       }
+  }
+}
    
 
 
@@ -277,7 +276,7 @@ public boolean getGameover() {
     }
     //converts string representation data of a board into a board object
 public static Board fromString(String data) {
-   // System.out.println("Input Data: " + data);
+    System.out.println("Attempting to deserialize: " + data);
 
     StringTokenizer tokenizer = new StringTokenizer(data, ";");
     
@@ -286,6 +285,7 @@ public static Board fromString(String data) {
     }
     
     StringTokenizer dimensionsTokenizer = new StringTokenizer(tokenizer.nextToken(), ",");
+    System.out.println("Total dimension tokens: " + dimensionsTokenizer.countTokens());
     
     if (dimensionsTokenizer.countTokens() < 3) {
         throw new IllegalArgumentException("Incomplete dimensions data.");
@@ -295,11 +295,15 @@ public static Board fromString(String data) {
     int height = Integer.parseInt(dimensionsTokenizer.nextToken());
     int expectedTotalMines = Integer.parseInt(dimensionsTokenizer.nextToken());
     
-    //System.out.println("Width: " + width + ", Height: " + height + ", Expected Mines: " + expectedTotalMines);
+    // Check if the parsed values are reasonable
+    if (width <= 0 || height <= 0 || expectedTotalMines < 0 || expectedTotalMines > width * height) {
+        throw new IllegalArgumentException("Invalid board dimensions or mine count.");
+    }
+    
+    System.out.println("Width: " + width + ", Height: " + height + ", Expected Mines: " + expectedTotalMines);
     
     Board board = new Board(width, height);
   
-    
     int actualTotalMines = 0;  // To keep track of the mines placed
 
     for (int y = 0; y < height; y++) {
@@ -308,6 +312,7 @@ public static Board fromString(String data) {
         }
 
         StringTokenizer rowTokenizer = new StringTokenizer(tokenizer.nextToken(), ",");
+        System.out.println("Tokens in row " + y + ": " + rowTokenizer.countTokens());
         
         for (int x = 0; x < width; x++) {
             if (!rowTokenizer.hasMoreTokens()) {
@@ -317,46 +322,43 @@ public static Board fromString(String data) {
             if("1".equals(rowTokenizer.nextToken())) {
                 board.cells[y][x].setMine(true);
                 actualTotalMines++;
-                //System.out.println("Mine placed at (" + x + ", " + y + ")");
+                System.out.println("Mine placed at (" + x + ", " + y + ")");
             }
         }
     }
 
-   // System.out.println("Total mines placed: " + actualTotalMines);
+    System.out.println("Expected mines: " + expectedTotalMines + ", Actual mines placed: " + actualTotalMines);
     
     if (expectedTotalMines != actualTotalMines) {
         System.out.println("WARNING: Expected number of mines and actual mines placed are different!");
     }
-  board.calculateandSetNeighboringMines();
-  board.setAllCellsToNotFlagged();
-  board.setAllCellsToNotRevealed();
-    //board.displayBoard();
-    
-   
-    //board.displayBoard();
-   board.updateMinesOnBoard();
+  
+    board.calculateandSetNeighboringMines();
+    board.setAllCellsToNotFlagged();
+    board.setAllCellsToNotRevealed();
+    board.updateMinesOnBoard();
     return board;
 }
     
     //converts game into string, saving the size, amount of mines and and wether each mine and empty cells are located
    
-//@Override
-//public String toString() {
-//    StringBuilder builder = new StringBuilder();
-//    builder.append(width).append(",").append(height).append(",").append(totalMines);
-//    
-//    for (int y = 0; y < height; y++) {
-//        builder.append(";");
-//        for (int x = 0; x < width; x++) {
-//            builder.append(cells[y][x].isMine() ? "1" : "0");
-//            if (x < width - 1) {
-//                builder.append(",");
-//            }
-//        }
-//    }
-//    
-//    return builder.toString();
-//}
+@Override
+public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append(width).append(",").append(height).append(",").append(totalMines);
+    
+    for (int y = 0; y < height; y++) {
+        builder.append(";");
+        for (int x = 0; x < width; x++) {
+            builder.append(cells[y][x].isMine() ? "1" : "0");
+            if (x < width - 1) {
+                builder.append(",");
+            }
+        }
+    }
+    
+    return builder.toString();
+}
     
  
 

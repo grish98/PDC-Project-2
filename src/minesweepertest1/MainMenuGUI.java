@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 public class MainMenuGUI extends JFrame {
 private GameManager gameManager;
-   
+private GameController controller;
 //Main Menu Buttons
 JButton newGameBtn = new JButton("New Game");
 JButton loadGameBtn = new JButton("Load Game");
@@ -16,9 +16,9 @@ JButton exitBtn = new JButton("Exit");
     
 
 
-    public MainMenuGUI(GameManager gameManager) {
+    public MainMenuGUI(GameManager gameManager, GameController controller) {
         this.gameManager = gameManager;
-
+        this.controller = controller;
         //ask for player name
         String playerName = JOptionPane.showInputDialog(null, "Enter your name:", "Player Name", JOptionPane.QUESTION_MESSAGE);
     if (playerName == null || playerName.trim().isEmpty()) {
@@ -39,14 +39,12 @@ JButton exitBtn = new JButton("Exit");
         // New Game button
         
         newGameBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Handle new game logic here
-                selectGameModeAndSize();
-            }
-        });
-        panel.add(newGameBtn);
-
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        controller.startNewGame();
+    }
+    });
+    panel.add(newGameBtn);
         // Load Game button
         
         loadGameBtn.addActionListener(new ActionListener() {
@@ -191,7 +189,7 @@ public void displayLeaderboard() {
                 JOptionPane.YES_NO_OPTION);
 
         if (option == JOptionPane.YES_OPTION) {
-            gameManager.newGame();
+            controller.startNewGame();
         } else {
             return; 
         }
@@ -207,14 +205,10 @@ public void displayLeaderboard() {
         );
 
         if (chosenGame != null) {
-            gameManager.loadGame(chosenGame.getGameId());
+            controller.startLoadGame(chosenGame.getGameId());
         }
     }
 }
 
-  public static void main(String[] args) {
-    GameManager gameManager = new GameManager();
-    MainMenuGUI mainMenu = new MainMenuGUI(gameManager);
-    mainMenu.setVisible(true);
-}
+ 
 }

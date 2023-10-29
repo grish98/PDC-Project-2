@@ -106,9 +106,9 @@ public class Cell {
         } else if (isMine) {
              str = "M";
         } else if (neighboringMines >= 0) {
-            System.out.print(neighboringMines);
+            str = String.valueOf(neighboringMines);
         } else {
-             str=  " ";
+             str =  " ";
         }
         return str;
     }

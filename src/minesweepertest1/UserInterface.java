@@ -115,60 +115,60 @@ public class UserInterface {
 //        }
 //    }
 
-    
-    public static DifficultySettings selectGameModeAndSize() {
-    DifficultySettings chosenDifficulty = null;
-
-    while (chosenDifficulty == null) {
-    System.out.println("Select game difficulty (Easy, Medium, Hard, Q to Quit):");
-    String input = scanner.nextLine().trim().toLowerCase();
-
-    switch (input) {
-        case "easy":
-        case "e":
-            chosenDifficulty = DifficultySettings.EASY;
-            break;
-        case "medium":
-        case "m":
-            chosenDifficulty = DifficultySettings.MEDIUM;
-            break;
-        case "hard":
-        case "h":
-            chosenDifficulty = DifficultySettings.HARD;
-            break;
-        case "q":
-            System.exit(0);  // Exit the program if the user wants to quit
-        default:
-            System.out.println("Invalid difficulty setting. Please try again.");
-    }
-    }
-        GameManager.chosenDifficulty = DifficultySettings.EASY;
-    // Let user choose a size/configuration for the board
-    int[][] configurations = chosenDifficulty.getConfigurations();
-    System.out.println("Available sizes for " + chosenDifficulty + " mode:");
-    for (int i = 0; i < configurations.length; i++) {
-        System.out.println((i + 1) + ". " + configurations[i][0] + "x" + configurations[i][1] + " with " + configurations[i][2] + " mines");
-    }
-    System.out.println("Choose a size (enter the number):");
-
-    int choice = -1;
-    while (choice < 1 || choice > configurations.length) {
-        try {
-            choice = scanner.nextInt();
-            if (choice < 1 || choice > configurations.length) {
-                System.out.println("Invalid choice. Please choose a valid number.");
-            }
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input. Please enter a number.");
-            scanner.nextLine();  // clear the invalid input
-        }
-    }
-
-    int[] selectedConfig = configurations[choice - 1];
-    GameManager.BoardManager(selectedConfig[0], selectedConfig[1], selectedConfig[2]);  
-    scanner.nextLine();
-    return chosenDifficulty;
-}
+//    
+//    public static DifficultySettings selectGameModeAndSize() {
+//    DifficultySettings chosenDifficulty = null;
+//
+//    while (chosenDifficulty == null) {
+//    System.out.println("Select game difficulty (Easy, Medium, Hard, Q to Quit):");
+//    String input = scanner.nextLine().trim().toLowerCase();
+//
+//    switch (input) {
+//        case "easy":
+//        case "e":
+//            chosenDifficulty = DifficultySettings.EASY;
+//            break;
+//        case "medium":
+//        case "m":
+//            chosenDifficulty = DifficultySettings.MEDIUM;
+//            break;
+//        case "hard":
+//        case "h":
+//            chosenDifficulty = DifficultySettings.HARD;
+//            break;
+//        case "q":
+//            System.exit(0);  // Exit the program if the user wants to quit
+//        default:
+//            System.out.println("Invalid difficulty setting. Please try again.");
+//    }
+//    }
+//        GameManager.chosenDifficulty = DifficultySettings.EASY;
+//    // Let user choose a size/configuration for the board
+//    int[][] configurations = chosenDifficulty.getConfigurations();
+//    System.out.println("Available sizes for " + chosenDifficulty + " mode:");
+//    for (int i = 0; i < configurations.length; i++) {
+//        System.out.println((i + 1) + ". " + configurations[i][0] + "x" + configurations[i][1] + " with " + configurations[i][2] + " mines");
+//    }
+//    System.out.println("Choose a size (enter the number):");
+//
+//    int choice = -1;
+//    while (choice < 1 || choice > configurations.length) {
+//        try {
+//            choice = scanner.nextInt();
+//            if (choice < 1 || choice > configurations.length) {
+//                System.out.println("Invalid choice. Please choose a valid number.");
+//            }
+//        } catch (InputMismatchException e) {
+//            System.out.println("Invalid input. Please enter a number.");
+//            scanner.nextLine();  // clear the invalid input
+//        }
+//    }
+//
+//    int[] selectedConfig = configurations[choice - 1];
+//    GameManager.BoardManager(selectedConfig[0], selectedConfig[1], selectedConfig[2]);  
+//    scanner.nextLine();
+//    return chosenDifficulty;
+//}
 
     /*)
     public static int MainMenu() {

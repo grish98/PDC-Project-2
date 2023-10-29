@@ -20,6 +20,8 @@ import java.awt.event.ActionListener;
     private JButton[][] boardButtons;
     private GameManager gameManager;
     private Board board;
+   
+    
     public BoardGUI(GameManager gameManager) {
         
         this.gameManager = gameManager;
@@ -28,7 +30,7 @@ import java.awt.event.ActionListener;
         int columns = board.getWidth();
 
         setTitle("Minesweeper Game Board");
-        setSize(500, 500);  
+        setSize(1000, 1000);  
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  // Close only this window
         setLocationRelativeTo(null);  // Center the window on the screen
 
@@ -39,7 +41,7 @@ import java.awt.event.ActionListener;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 JButton button = new JButton();
-                button.addMouseListener(new CellMouseListener(i, j, gameManager, this));
+                button.addMouseListener(new CellMouseListener(j, i, gameManager, this));
                 add(button);
                 boardButtons[i][j] = button;
             }
@@ -77,6 +79,20 @@ import java.awt.event.ActionListener;
             }
         }
     }
+       
+    public void showGameOutcome(String message) {
+        System.out.println("showGameOutcome called with message: " + message);
+        SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(this, message));
+        
+    }
+    
+    public void disableUserInteractions() {
+    for (int i = 0; i < boardButtons.length; i++) {
+        for (int j = 0; j < boardButtons[i].length; j++) {
+            boardButtons[i][j].setEnabled(false);  // Disable each button
+        }
+    }
+}
 }
     
     

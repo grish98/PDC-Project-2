@@ -193,44 +193,6 @@ public boolean allMinesFlagged() {
 }
 
 
-    
-
-      //displays the board, with a border around and numbers to indicate the cells cordinates
-
-//  public void displayBoard() {
-//    int maxWidth = String.valueOf(cells.length).length();  // Determine the width needed based on the number of rows/columns
-//    
-//    // Print column numbers on top
-//    System.out.print(" ".repeat(maxWidth + 2));  // Initial space for row numbers
-//    for (int x = 0; x < cells[0].length; x++) {
-//        System.out.print((x + 1) + " ".repeat(maxWidth - String.valueOf(x + 1).length() + 1));
-//    }
-//    System.out.println();
-//    
-//    // Print upper border
-//    System.out.println(" ".repeat(maxWidth + 1) + "-".repeat(cells[0].length * (maxWidth + 1)));
-//    
-//    // Print each row
-//    for (int y = 0; y < cells.length; y++) {
-//        // Print row number on the left
-//        System.out.print((y + 1) + " ".repeat(maxWidth - String.valueOf(y + 1).length()) + "|");
-//        
-//        // Print cells in the row
-//        for (int x = 0; x < cells[y].length; x++) {
-//            System.out.print(" ");
-//            cells[y][x].display();
-//            System.out.print(" ".repeat(maxWidth - 1));
-//        }
-//        
-//        // End of row
-//        System.out.println("|");
-//    }
-//    
-//    // Print lower border
-//    System.out.println(" ".repeat(maxWidth + 1) + "-".repeat(cells[0].length * (maxWidth + 1)));
-//}
-
-
 public void RevealMines() {
     for (int i = 0; i < height; i++) {
        for (int j = 0; j < width; j++) {

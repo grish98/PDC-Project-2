@@ -17,18 +17,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author grish
+ * Data Access Object (DAO) class for managing game state persistence.
+ * This class provides methods to save and retrieve game state to/from a database.
+ * 
+ * @author Grisham Balloo 20099072
  */
 public final class GameStateDAO implements DAO {
 
     private  DataBaseManager dbManager = DataBaseManager.getInstance();
-
+    
+/**
+     * Constructor for GameStateDAO. Ensures the GAMESTATE table exists.
+     * 
+     * @param dbManager The database manager instance for database operations.
+     */
     public GameStateDAO(DataBaseManager dbManager) {
         this.dbManager = dbManager;
         ensureTableExists();
     }
     
+    /**
+     * Ensures the GAMESTATE table exists in the database. If it does not exist, it creates the table.
+     */
    @Override
      public void ensureTableExists() {
         try (Connection conn = dbManager.getConnection();
@@ -49,7 +59,11 @@ public final class GameStateDAO implements DAO {
         }
     }
 
-   
+   /**
+     * Saves a given GameState object to the database.
+     * 
+     * 
+     */
    public void saveGameState(GameState gameState) {
        
        
@@ -67,7 +81,12 @@ public final class GameStateDAO implements DAO {
             System.err.println("Error saving GameState: " + e.getMessage());
         }
     }
-
+/**
+     * Loads game states for a given player from the database.
+     * 
+     *
+     * return A map containing game states for the given player, indexed by game ID.
+     */
     public Map<String, GameState> loadGameState(String playerName) {
         Map<String, GameState> gameStatesMap = new HashMap<>();
         String query = "SELECT * FROM GAMESTATE WHERE PLAYERNAME = ?";

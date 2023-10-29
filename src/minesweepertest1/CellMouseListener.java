@@ -1,7 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Represents a mouse listener for individual cells in the Minesweeper game board.
+ * This class captures left and right mouse clicks on cells, triggering reveal and flag actions respectively.
  */
 package minesweepertest1;
 
@@ -11,7 +10,7 @@ import javax.swing.SwingUtilities;
 
 /**
  *
- * @author grish
+ * @author Grisham Balloo 20099072
  */
 public class CellMouseListener extends MouseAdapter {
          private final int x;
@@ -25,7 +24,11 @@ public class CellMouseListener extends MouseAdapter {
         this.gameManager = gameManager;
         this.boardgui = boardgui;
     }
-
+    
+    /**
+     * Handles mouse click events on the cell.
+     * Left click reveals and right click  toggle flag 
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
         if (SwingUtilities.isLeftMouseButton(e)) {

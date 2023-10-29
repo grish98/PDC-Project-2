@@ -21,12 +21,15 @@ import java.util.StringTokenizer;
 
 
 public class Board {
+    // List to keep track of moves made on the board.
     private List<Move> moves = new ArrayList<>();
+    // A 2D array of cells representing the game board.
     Cell[][] cells;
-    private int width;
-    private int height;
-    private int totalMines;
-    private boolean GameOver;
+    
+    private int width;         // Width of the board.
+    private int height;        // Height of the board.
+    private int totalMines;    // Total number of mines on the board.
+    private boolean GameOver;  // State to check if the game is over.
   
      /**
      * Initializes an empty board without mines.
@@ -44,7 +47,9 @@ public class Board {
          
         
     }
-        
+        /**
+     * Initializes a board with mines.
+     */
     public Board(int width, int height, int totalMines) {
         this.width = width;
         this.height = height;
@@ -171,7 +176,7 @@ System.out.println("Expected Revealed: " + (width * height - totalMines));
     return nonMineRevealedCount == (width * height - totalMines);
 }
 
-//used for debugging
+//checks is all mines are flagged, this is a game win condition
 public boolean allMinesFlagged() {
     
     int mines =countMinesOnBoard();
@@ -187,12 +192,12 @@ public boolean allMinesFlagged() {
         }
     }
     
-    System.out.println("Correct Flag Count: " + correctFlagCount);
+    //System.out.println("Correct Flag Count: " + correctFlagCount);
 //System.out.println("Total Mines: " + totalMines);
     return correctFlagCount == totalMines;
 }
 
-
+// reveals all mines on the board, this is used when the game is lost, all the mines will be displayed
 public void RevealMines() {
     for (int i = 0; i < height; i++) {
        for (int j = 0; j < width; j++) {
@@ -238,7 +243,7 @@ public boolean getGameover() {
     }
     //converts string representation data of a board into a board object
 public static Board fromString(String data) {
-    System.out.println("Attempting to deserialize: " + data);
+    //System.out.println("Attempting to deserialize: " + data);
 
     StringTokenizer tokenizer = new StringTokenizer(data, ";");
     
@@ -247,7 +252,7 @@ public static Board fromString(String data) {
     }
     
     StringTokenizer dimensionsTokenizer = new StringTokenizer(tokenizer.nextToken(), ",");
-    System.out.println("Total dimension tokens: " + dimensionsTokenizer.countTokens());
+    //System.out.println("Total dimension tokens: " + dimensionsTokenizer.countTokens());
     
     if (dimensionsTokenizer.countTokens() < 3) {
         throw new IllegalArgumentException("Incomplete dimensions data.");
@@ -262,7 +267,7 @@ public static Board fromString(String data) {
         throw new IllegalArgumentException("Invalid board dimensions or mine count.");
     }
     
-    System.out.println("Width: " + width + ", Height: " + height + ", Expected Mines: " + expectedTotalMines);
+    //System.out.println("Width: " + width + ", Height: " + height + ", Expected Mines: " + expectedTotalMines);
     
     Board board = new Board(width, height);
   
@@ -274,7 +279,7 @@ public static Board fromString(String data) {
         }
 
         StringTokenizer rowTokenizer = new StringTokenizer(tokenizer.nextToken(), ",");
-        System.out.println("Tokens in row " + y + ": " + rowTokenizer.countTokens());
+        //System.out.println("Tokens in row " + y + ": " + rowTokenizer.countTokens());
         
         for (int x = 0; x < width; x++) {
             if (!rowTokenizer.hasMoreTokens()) {
@@ -289,10 +294,10 @@ public static Board fromString(String data) {
         }
     }
 
-    System.out.println("Expected mines: " + expectedTotalMines + ", Actual mines placed: " + actualTotalMines);
+   // System.out.println("Expected mines: " + expectedTotalMines + ", Actual mines placed: " + actualTotalMines);
     
     if (expectedTotalMines != actualTotalMines) {
-        System.out.println("WARNING: Expected number of mines and actual mines placed are different!");
+       // System.out.println("WARNING: Expected number of mines and actual mines placed are different!");
     }
   
     board.calculateandSetNeighboringMines();
@@ -323,11 +328,11 @@ public String toString() {
 }
     
  
-
+// return a list of moves
 public List<Move> getMoves() {
     return moves;
 }
-
+// 
 public void clearMoves() {
     moves.clear();
 }
@@ -371,7 +376,7 @@ public int countMinesOnBoard() {
 
     return mineCount;
 }
-//
+//all cells on the board are set to not reveal, this is used for loading saved boards
 public void setAllCellsToNotRevealed() {
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
@@ -379,6 +384,7 @@ public void setAllCellsToNotRevealed() {
         }
     }
 }
+//all cells on the board are set to not flagged, this is used for loading saved boards
 public void setAllCellsToNotFlagged() {
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
@@ -388,6 +394,8 @@ public void setAllCellsToNotFlagged() {
     
     
 }
+
+//gets a cell at specified coordinates.
 public Cell getCell(int x, int y) {
     if (x < 0 || x >= width || y < 0 || y >= height) {
         throw new IllegalArgumentException("Coordinates out of bounds");

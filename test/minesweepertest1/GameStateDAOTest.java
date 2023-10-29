@@ -89,6 +89,7 @@ public class GameStateDAOTest {
         }
     }
 
+    // tests for laoding state if the player is not on record
     @Test
     public void testLoadGameStateWithNonExistentPlayer() {
         Map<String, GameState> loadedGameStates = dao.loadGameState("nonExistentPlayer");
@@ -96,6 +97,7 @@ public class GameStateDAOTest {
         assertTrue(loadedGameStates.isEmpty());
     }
 
+    //tests for when 1 player wants to enter mutiple entries
     @Test
     public void testLoadGameStateWithMultipleEntries() {
         Board testBoard1 = new Board(5, 5, 5);

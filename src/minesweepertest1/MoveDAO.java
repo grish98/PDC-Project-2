@@ -6,8 +6,10 @@
 package minesweepertest1;
 
 /**
- *
- * @author grish
+ * Represents the data access object for managing the moves in the Minesweeper game.
+ * This class is responsible for saving and loading moves from the database.
+ * 
+ * @author Grisham Balloo 20099072
  */
 
 import java.sql.Connection;
@@ -25,6 +27,11 @@ public final class MoveDAO implements DAO{
         this.dbManager = dbManager;
         ensureTableExists();
     }
+    
+    /**
+     * Ensures the MOVELOG table exists in the database.
+     * If the table does not exist, it creates one.
+     */
     @Override
     public void ensureTableExists() {
         try (Connection conn = dbManager.getConnection();
@@ -46,6 +53,12 @@ public final class MoveDAO implements DAO{
         }
     }
     
+    
+    /**
+     * Saves a list of moves to the MOVELOG table in the database.
+     * 
+     *  moves List of moves to be saved.
+     */
     public void saveMoveLog(List<Move> moves) {
     String insertSQL = "INSERT INTO MOVELOG ( PLAYERNAME, GAMEID, X, Y, ACTION) VALUES ( ?, ?, ?, ?, ?)";
 
@@ -64,7 +77,11 @@ public final class MoveDAO implements DAO{
         System.err.println("Error saving move logs: " + e.getMessage());
     }
     }
-    
+    /**
+     * Loads all moves from the mOVELOG table in the database.
+     * 
+     * return List of moves loaded from the database.
+     */
     public List<Move> loadMoveLog() {
     List<Move> moves = new ArrayList<>();
     String query = "SELECT * FROM MOVELOG";

@@ -1,13 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Manages the database connection for the Minesweeper game.
+ * This class follows the Singleton pattern to ensure only one instance of the database connection exists.
  */
 package minesweepertest1;
 
 /**
  *
- * @author grish
+ * @author Grisham Balloo 20099072
  */
 
 import java.sql.Connection;
@@ -23,17 +22,22 @@ public class DataBaseManager {
     //for testing purposes:
     //private static final String URL = "jdbc:derby:MineSweeperEDB_Test;create=true"; 
     
-    private Connection conn;
+    private Connection conn; // The database connection object
 
-    
+    // The single instance of DataBaseManager (Singleton pattern)
     private static DataBaseManager instance;
 
-   
+   /**
+     * Private constructor to establish the database connection 
+     */
     private DataBaseManager()  {
         establishConnection();
     }
 
-    
+    /**
+     * If no instance exists, create one.
+     * return The single instance of DataBaseManager.
+     */
     public static synchronized DataBaseManager getInstance() {
     if (instance == null) {
         instance = new DataBaseManager();
@@ -41,6 +45,11 @@ public class DataBaseManager {
     return instance;
 }
 
+    
+    /**
+     * Tries to establish a new database connection. If a connection already exists, it returns the existing connection.
+     * return The established connection, or null if the connection cannot be established.
+     */
      public Connection getConnection() {
     try {
         System.out.println("Establishing a new database connection");
@@ -74,6 +83,8 @@ public class DataBaseManager {
     }
 }
 
+      //Closes the established database connections.
+     
     public void closeConnections() {
         if (conn != null) {
             try {
@@ -84,7 +95,7 @@ public class DataBaseManager {
             }
         }
     }
-   
+   //Overrides the clone method to prevent cloning of the database manager instance.
      @Override
         public Object clone() throws
             CloneNotSupportedException {

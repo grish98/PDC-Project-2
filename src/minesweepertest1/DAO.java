@@ -1,14 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Represents a Data Access Object (DAO) interface.
+ * This interface provides a contract for ensuring that a required table exists in the database.
  */
 package minesweepertest1;
 
 /**
  *
- * @author grish
- */
+ * @author Grisham Balloo 20099072
+ 
+
+
+     * Ensures that the required table exists in the database.
+   
+     */
 public interface DAO {
     void ensureTableExists();
 }

@@ -7,7 +7,7 @@ package minesweepertest1;
 
 /**
  *
- * @author grish
+ * @author Grisham Balloo 20099072
  */
 import java.io.*;
 import java.util.*;
@@ -23,9 +23,19 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) class for managing leaderboard persistence.
+ * This class provides methods to save, retrieve, and manage leaderboard entries in a database.
+ * 
+ * @author Grisham Balloo 20099072
+ */
 public class LeaderBoardDAO implements DAO{
   private  static DataBaseManager dbManager = DataBaseManager.getInstance();
 
+  
+  /**
+     * Ensures the LEADERBOARD table exists in the database. If it does not exist, it creates the table.
+     */
     public LeaderBoardDAO(DataBaseManager dbManager) {
         this.dbManager = dbManager;
         ensureTableExists();
@@ -51,6 +61,12 @@ public class LeaderBoardDAO implements DAO{
         }
     }
 
+    /**
+     * Saves a new leaderboard entry to the database.
+     * If there are more than 3 entries for the same difficulty, it will remove the slowest one.
+     * 
+     * 
+     */
     public void saveToLeaderboard(Leaderboard newEntry) {
       if (newEntry == null) {
         // will not save if entry is null, null entry will be caused from a loaded game, loaded games will not count towards the leadeer board only new games
@@ -103,6 +119,11 @@ public class LeaderBoardDAO implements DAO{
     }
 }
 
+    /**
+     * Loads the leaderboard entries from the database, ordered by time in ascending order.
+     * 
+     *.
+     */
     public static List<Leaderboard> loadLeaderboard() {
         List<Leaderboard> leaderboard = new ArrayList<>();
         String query = "SELECT * FROM LEADERBOARD ORDER BY TIME ASC"; // Adding an ORDER BY clause

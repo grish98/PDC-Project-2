@@ -1,10 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Manages the core game logic, including board setup, game state management,
+ * user interactions, database operations, and event handling.
+ * 
  * @author Grisham Balloo 20099072
-
-
  */
 package minesweepertest1;
 
@@ -29,12 +27,14 @@ public class GameManager {
     static DifficultySettings difficulty ;
     private static final Scanner scanner = new Scanner(System.in);
     private static List<Move> moveLog = new ArrayList<>();
+    // Database-related members
     
     private static final DataBaseManager dbManager = DataBaseManager.getInstance();
     private static final PlayerProfileDAO playerProfileDAO = new PlayerProfileDAO(dbManager);
     private final GameStateDAO gameStateDAO = new GameStateDAO(dbManager);
     private final MoveDAO moveDAO = new MoveDAO(dbManager);
     private final LeaderBoardDAO leaderboardDAO = new LeaderBoardDAO(dbManager);
+    
     private boolean GameinProcess = false;
     private GameEventListener gameEventListener;
 
@@ -137,7 +137,7 @@ public List<GameState> getSavedGames() {
     gui.updateBoard();
 }
 
-    
+   //method for ending the game 
  public String endGame() {
     String message = "";
 
@@ -163,7 +163,7 @@ public List<GameState> getSavedGames() {
     
     return message;
 }
-
+// creates a new game
     public BoardGUI newGame(MainMenuGUI mainMenu) {
     difficulty = mainMenu.selectGameModeAndSize();
 
@@ -189,7 +189,7 @@ public List<GameState> getSavedGames() {
 
 
 
-     
+     // reveals a cell, saves in the movelogs, also checks win conditions
     public void RevealCell(int x, int y){
     if (checkWin() || getGameOver()) {
         return; // Ignore if game is already over
@@ -204,7 +204,7 @@ public List<GameState> getSavedGames() {
         endTheGame();
     }
         }
-
+// flag a cell, saves in the movelogs, also checks win conditions
    public void FlagCell(int x, int y){
     if (checkWin() || getGameOver()) {
         return; // Ignore if game is already over

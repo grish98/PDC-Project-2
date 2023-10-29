@@ -6,8 +6,10 @@
 package minesweepertest1;
 
 /**
- *
- * @author grish
+ * Represents the data access object for managing the player profiles in the Minesweeper game.
+ * This class is responsible for saving, loading, updating, and checking existence of player profiles in the database.
+ * 
+ * @author Grisham Balloo 20099072
  */
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -27,6 +29,10 @@ public final class PlayerProfileDAO implements DAO{
         ensureTableExists();
     }
 
+    /**
+     * Ensures the PLAYERPROFILE table exists in the database.
+     * If the table does not exist, it creates one.
+     */
     @Override
     public void ensureTableExists() {
         
@@ -52,6 +58,11 @@ public final class PlayerProfileDAO implements DAO{
     }
     }
 
+    /**
+     * Loads all player profiles from the PLAYERPROFILE table in the database.
+     * 
+     * return List of player profiles loaded from the database.
+     */
    public List<PlayerProfile> loadAllPlayerProfiles() {
         List<PlayerProfile> profiles = new ArrayList<>();
         String query = "SELECT * FROM PLAYERPROFILE";
@@ -75,6 +86,12 @@ public final class PlayerProfileDAO implements DAO{
         return profiles;
     }
 
+    /**
+     * Loads a specific player's profile from the PLAYERPROFILE table in the database.
+     * 
+     * 
+     * return The player's profile.
+     */
     public PlayerProfile loadPlayerProfile(String playerName) {
         PlayerProfile profile = null;
         String query = "SELECT * FROM PLAYERPROFILE WHERE PLAYERNAME = ?";
@@ -100,6 +117,12 @@ public final class PlayerProfileDAO implements DAO{
         return profile;
     }
 
+    /**
+     * Saves a player's profile to the PLAYERPROFILE table in the database.
+     * If the profile already exists, it updates the record; otherwise, it inserts a new record.
+     * 
+     * 
+     */
     public void savePlayerProfile(PlayerProfile profile) {
         if (profileExists(profile.getPlayerName())) {
             update(profile);
@@ -108,6 +131,11 @@ public final class PlayerProfileDAO implements DAO{
         }
     }
 
+    /**
+     * Checks if a player's profile exists in the PLAYERPROFILE table in the database.
+     * 
+     *.
+     */
     private boolean profileExists(String playerName) {
         boolean exists = false;
         String query = "SELECT 1 FROM PLAYERPROFILE WHERE PLAYERNAME = ?";
@@ -128,6 +156,11 @@ public final class PlayerProfileDAO implements DAO{
         return exists;
     }
 
+    /**
+     * Inserts a new player's profile into the PLAYERPROFILE table in the database.
+     * 
+     * 
+     */
     private void insert(PlayerProfile profile) {
         String query = "INSERT INTO PLAYERPROFILE (PLAYERNAME, WINS, LOSSES, POINTS) VALUES (?, ?, ?, ?)";
 
@@ -147,6 +180,11 @@ public final class PlayerProfileDAO implements DAO{
         }
     }
 
+    /**
+     * Updates an existing player's profile in the PLAYERPROFILE table in the database.
+     * 
+     * 
+     */
     private void update(PlayerProfile profile) {
         String query = "UPDATE PLAYERPROFILE SET WINS = ?, LOSSES = ?, POINTS = ? WHERE PLAYERNAME = ?";
 

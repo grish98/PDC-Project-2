@@ -1,5 +1,10 @@
 package minesweepertest1;
-
+/**
+ * Represents the main menu GUI of the Minesweeper game.
+ * Provides options to start a new game, load a saved game, view the leaderboard, and exit the game.
+ * 
+ * @author Grisham Balloo 20099072
+ */
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -93,7 +98,11 @@ JButton exitBtn = new JButton("Exit");
         add(panel);
     }
 
-    
+    /**
+     * Allows the user to select the game difficulty and board size.
+     * 
+     * return The selected difficulty setting.
+     */
     public DifficultySettings selectGameModeAndSize() {
     DifficultySettings chosenDifficulty = null;
 
@@ -154,7 +163,9 @@ JButton exitBtn = new JButton("Exit");
 
     return chosenDifficulty;
 }
-
+/**
+     * Displays the leaderboard for the selected difficulty.
+     */
 public void displayLeaderboard() {
     Object[] difficultyOptions = {"Easy", "Medium", "Hard", "Quit"};
     DifficultySettings chosenDifficulty = null;
@@ -193,7 +204,9 @@ public void displayLeaderboard() {
         JOptionPane.showMessageDialog(this, leaderboard, "Leaderboard", JOptionPane.INFORMATION_MESSAGE);
     }
 }
-
+/**
+     * Loads the saved games for the current player and lets the user select one to continue playing.
+     */
  public void loadPlayersGame() {
     List<GameState> savedGamesList = gameManager.getSavedGames();
 

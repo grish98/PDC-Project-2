@@ -1,13 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Represents the graphical user interface (GUI) of the Minesweeper game board.
+ * The class manages the display of the board, interactions with cells, and other GUI components.
  */
 package minesweepertest1;
 
 /**
  *
- * @author grish
+ * @author Grisham Balloo 20099072
  */
 import javax.swing.*;
 import java.awt.*;
@@ -17,11 +16,22 @@ import java.awt.event.ActionListener;
 
 
     public class BoardGUI extends JFrame {
+    // Array of buttons representing cells on the game board.
     private JButton[][] boardButtons;
+    // Reference to the game manager to control game logic.
     private GameManager gameManager;
+    // Reference to the game board to access cell data.
     private Board board;
+    // Button for saving the game.
     private JButton saveButton;
+    // Label to display the timer.
     private JLabel timerLabel;
+
+    /**
+     * Constructor to initialize the game board GUI.
+     * Sets up the layout, buttons, and interactions.
+     * 
+     */
     public BoardGUI(GameManager gameManager) {
         
         this.gameManager = gameManager;
@@ -52,7 +62,7 @@ setTitle("Minesweeper Game Board");
         });
         guiTimer.start();
 
-        // Now setup the board
+        // setup the board
         boardButtons = new JButton[rows][columns];
         JPanel boardPanel = new JPanel(new GridLayout(rows, columns));
         for (int i = 0; i < rows; i++) {
@@ -88,7 +98,10 @@ setTitle("Minesweeper Game Board");
         
         
         
-    
+     /**
+     * Updates the visual representation of the game board.
+     * refreshes each cell based on its state 
+     */
     
        public void updateBoard() {
         for (int i = 0; i < board.getHeight(); i++) {
@@ -120,13 +133,19 @@ setTitle("Minesweeper Game Board");
             }
         }
     }
-       
+       /**
+     * displays the outcome of the game to the user.
+     *  message indicating the game's outcome (win/lose).
+     */
     public void showGameOutcome(String message) {
         System.out.println("showGameOutcome called with message: " + message);
         SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(this, message));
         
     }
-    
+    /**
+     * Disables interactions with all cells on the board.
+     * Used after the game has ended to prevent further interactions.
+     */
     public void disableUserInteractions() {
     for (int i = 0; i < boardButtons.length; i++) {
         for (int j = 0; j < boardButtons[i].length; j++) {

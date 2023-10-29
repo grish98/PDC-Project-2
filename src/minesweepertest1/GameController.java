@@ -1,20 +1,16 @@
-/*
- * 
- * Manages the game's core loop, user input, and interactions between various components like the UI and game logic.
- 
- * @author Grisham Balloo 20099072
-
- */
+/**
+ * Manages the game's core loop, user input, and interactions between various components
+ * like the UI and game logic.
+ * Implements the GameEventListener interface to react to game events.
+ * */
 package minesweepertest1;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
+
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
+
 /**
  *
- * @author grish
+ * @author Grisham Balloo 20099072
  */
 
 public class GameController implements GameEventListener {
@@ -30,6 +26,9 @@ public class GameController implements GameEventListener {
         mainMenu.setVisible(true);
     }
     
+    /**
+     * Initiates a new game. If the game fails to initialize, an error message is displayed.
+     */
     public void startNewGame() {
         
         boardGUI = gameManager.newGame(mainMenu);
@@ -39,6 +38,10 @@ public class GameController implements GameEventListener {
         }
     }
     
+    /**
+     * Loads an existing game based on the provided game ID.
+     * If the game fails to load, an error message is displayed.
+     */
      public void startLoadGame(String gameId) {
         
         boardGUI = gameManager.loadGame(gameId);
@@ -48,6 +51,11 @@ public class GameController implements GameEventListener {
         }
     }
     
+     /**
+     * Handles the end of the game. Displays the game outcome on the board GUI.
+     *
+     * 
+     */
     @Override
     public void onGameEnd(String message) {
         System.out.println("onGameEnd called in GameController with message: " + message);

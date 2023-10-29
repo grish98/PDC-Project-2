@@ -97,7 +97,7 @@ public void testLoadAllPlayerProfilesWhenEmpty() {
     assertNotNull(profiles);
     assertTrue(profiles.isEmpty());
 }
-
+//tests for loading large amount of players
 @Test
 public void testLoadAllPlayerProfilesWithLargeData() {
     final int NUM_PROFILES = 1000;

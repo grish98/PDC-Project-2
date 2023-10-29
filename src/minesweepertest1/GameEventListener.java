@@ -1,13 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Represents a listener for game events.
+ * gameController  implement this interface can react to ending game events.
+ * 
+ * @author Grisham Balloo 20099072
  */
 package minesweepertest1;
 
 /**
  *
- * @author grish
+ * @author Grisham Balloo 20099072
  */
 public interface GameEventListener {
     void onGameEnd(String message);
